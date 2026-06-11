@@ -17,7 +17,6 @@
       overflow-x: hidden;
     }
 
-    /* NAV */
     nav {
       display: flex;
       justify-content: space-between;
@@ -56,7 +55,6 @@
 
     .nav-links a:hover { color: #0e0e0e; }
 
-    /* HERO */
     .hero {
       min-height: 90vh;
       display: flex;
@@ -127,14 +125,12 @@
 
     .hero-cta:hover { opacity: 0.85; transform: translateY(-2px); }
 
-    /* DIVIDER */
     .divider {
       border: none;
       border-top: 1px solid rgba(0,0,0,0.1);
       margin: 0 3rem;
     }
 
-    /* SECCIONES */
     .section { padding: 6rem 3rem; }
 
     .section-header {
@@ -162,7 +158,6 @@
       line-height: 1.1;
     }
 
-    /* PROYECTOS */
     .proyectos-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -197,20 +192,9 @@
       position: relative;
     }
 
-    .thumb-turco { background: #0a0a0a; color: #FFD600; }
-    .thumb-botas { background: #f5ede3; color: #c0673a; }
-
-    .thumb-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      position: absolute;
-      bottom: 14px;
-      left: 18px;
-      opacity: 0.5;
-      font-family: 'Inter', sans-serif;
-    }
+    .thumb-turco  { background: #0a0a0a; color: #FFD600; }
+    .thumb-botas  { background: #f5ede3; color: #c0673a; }
+    .thumb-barber { background: #1a1a1a; color: #e8e0d0; }
 
     .proyecto-info {
       padding: 1.5rem;
@@ -264,7 +248,6 @@
 
     .proyecto-btn:hover { opacity: 0.75; }
 
-    /* SERVICIOS */
     .servicios-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -310,7 +293,6 @@
       line-height: 1.6;
     }
 
-    /* CONTACTO */
     .contacto-section {
       padding: 6rem 3rem;
       display: grid;
@@ -383,7 +365,6 @@
       letter-spacing: 0.1em;
     }
 
-    /* FOOTER */
     footer {
       border-top: 1px solid rgba(0,0,0,0.1);
       padding: 1.5rem 3rem;
@@ -396,7 +377,6 @@
       gap: 0.5rem;
     }
 
-    /* ANIMACIONES */
     .fade-up {
       opacity: 0;
       transform: translateY(24px);
@@ -404,7 +384,6 @@
     }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-    /* RESPONSIVE */
     @media (max-width: 768px) {
       nav { padding: 1.25rem 1.5rem; }
       .hero { padding: 4rem 1.5rem; min-height: 80vh; }
@@ -482,7 +461,21 @@
           <p class="proyecto-nombre">KAIRO Botas</p>
           <p class="proyecto-desc">Tienda online con carrito, favoritos y talles.</p>
         </div>
-        <a class="proyecto-btn" href=" https://paginas-webs.github.io/kairo-botas/" target="_blank">Ver sitio →</a>
+        <a class="proyecto-btn" href="https://paginas-webs.github.io/kairo-botas/" target="_blank">Ver sitio →</a>
+      </div>
+    </div>
+
+    <div class="proyecto-card fade-up">
+      <div class="proyecto-thumb thumb-barber">
+        <span>THE BARBER</span>
+      </div>
+      <div class="proyecto-info">
+        <div class="proyecto-meta">
+          <p class="proyecto-tipo">Barbería · Turnos</p>
+          <p class="proyecto-nombre">The Barber</p>
+          <p class="proyecto-desc">Sitio web para barbería con reserva de turnos.</p>
+        </div>
+        <a class="proyecto-btn" href="https://paginas-webs.github.io/The-barber/" target="_blank">Ver sitio →</a>
       </div>
     </div>
   </div>
@@ -505,7 +498,7 @@
     <div class="servicio-item fade-up">
       <div class="servicio-num">02</div>
       <span class="servicio-icon">📱</span>
-      <h3>100% adaptable </h3>
+      <h3>100% adaptable</h3>
       <p>Tu sitio se ve perfecto en celulares, tablets y computadoras.</p>
     </div>
     <div class="servicio-item fade-up">
@@ -518,7 +511,7 @@
       <div class="servicio-num">04</div>
       <span class="servicio-icon">☁️</span>
       <h3>Online para siempre</h3>
-      <p>Tu sitio alojado en la nube, disponible las 24 horas</p>
+      <p>Tu sitio alojado en la nube, disponible las 24 horas.</p>
     </div>
   </div>
 </section>

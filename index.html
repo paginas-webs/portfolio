@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> Diseños Webs</title>
+  <title>Zerboni · Desarrollo web</title>
+  <meta name="description" content="Diseño y desarrollo páginas web para locales, comercios y emprendimientos del GBA. Sitios profesionales, rápidos y adaptados a celular. Consultá sin cargo.">
+  <meta name="author" content="Zerboni">
+  <link rel="canonical" href="https://paginas-webs.github.io/">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,6 +31,29 @@
       background: rgba(247,245,240,0.95);
       backdrop-filter: blur(12px);
       z-index: 100;
+    }
+
+    .nav-disponible {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      color: #555;
+      font-weight: 400;
+    }
+    .nav-disponible::before {
+      content: '';
+      display: block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 0 2px rgba(34,197,94,0.25);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { box-shadow: 0 0 0 2px rgba(34,197,94,0.25); }
+      50%       { box-shadow: 0 0 0 5px rgba(34,197,94,0.1); }
     }
 
     .nav-logo {
@@ -56,7 +82,7 @@
     .nav-links a:hover { color: #0e0e0e; }
 
     .hero {
-      min-height: 90vh;
+      min-height: 75vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -293,6 +319,349 @@
       line-height: 1.6;
     }
 
+    .planes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+
+    .plan-card {
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 18px;
+      background: #fff;
+      padding: 2.25rem 2rem;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      position: relative;
+    }
+
+    .plan-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+    }
+
+    .plan-card.destacado {
+      border-color: #0e0e0e;
+    }
+
+    .plan-tag {
+      position: absolute;
+      top: -12px;
+      right: 2rem;
+      background: #0e0e0e;
+      color: #f7f5f0;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+    }
+
+    .plan-nombre {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 0.75rem;
+    }
+
+    .plan-precio {
+      font-family: 'Inter', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 500;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.5rem;
+      color: #0e0e0e;
+      display: inline-block;
+      transition: transform 0.25s ease, color 0.25s ease;
+    }
+
+    .plan-card:hover .plan-precio {
+      transform: scale(1.05);
+      color: #c0673a;
+    }
+
+    .plan-objetivo {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 1.75rem;
+      line-height: 1.6;
+      min-height: 40px;
+    }
+
+    .plan-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-bottom: 1.75rem;
+      flex-grow: 1;
+    }
+
+    .plan-features li {
+      font-size: 14px;
+      color: #333;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.4;
+    }
+
+    .plan-features li::before {
+      content: '';
+      display: block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #0e0e0e;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .plan-ejemplos {
+      font-size: 12px;
+      color: #999;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      padding-top: 1.25rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .plan-ejemplos strong {
+      color: #666;
+      font-weight: 600;
+    }
+
+    .plan-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #f7f5f0;
+      color: #0e0e0e;
+      border: 1px solid rgba(0,0,0,0.15);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 13px 20px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .plan-card.destacado .plan-btn {
+      background: #0e0e0e;
+      color: #f7f5f0;
+      border-color: #0e0e0e;
+    }
+
+    .plan-btn:hover { opacity: 0.8; }
+
+    .planes-nota {
+      font-size: 12px;
+      color: #999;
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    .testimonios-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .testimonio-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 18px;
+      padding: 1.75rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .testimonio-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.07);
+    }
+
+    .testimonio-texto {
+      font-size: 14px;
+      color: #444;
+      line-height: 1.75;
+      flex-grow: 1;
+    }
+
+    .testimonio-autor {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .testimonio-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #e8e5df;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #888;
+      flex-shrink: 0;
+    }
+
+    .testimonio-nombre {
+      font-size: 13px;
+      font-weight: 600;
+      color: #0e0e0e;
+    }
+
+    .testimonio-rubro {
+      font-size: 11px;
+      color: #aaa;
+    }
+
+    .testimonio-estrellas {
+      display: flex;
+      gap: 2px;
+      margin-bottom: 0.25rem;
+    }
+
+    .testimonio-estrellas span {
+      font-size: 14px;
+      color: #f59e0b;
+      line-height: 1;
+      font-style: normal;
+      font-family: Arial, sans-serif;
+    }
+
+    @media (max-width: 768px) {
+      .testimonios-grid { grid-template-columns: 1fr; }
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      backdrop-filter: blur(4px);
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: #f7f5f0;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 860px;
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+      animation: modalIn 0.28s ease;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(18px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      flex-shrink: 0;
+    }
+    .modal-header-left { display: flex; align-items: center; gap: 10px; }
+    .modal-dots { display: flex; gap: 6px; }
+    .modal-dots span:nth-child(1) { background: #ff5f57; }
+    .modal-dots span:nth-child(2) { background: #febc2e; }
+    .modal-dots span:nth-child(3) { background: #28c840; }
+    .modal-plan-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #888; }
+    .modal-close { background: none; border: none; cursor: pointer; font-size: 22px; color: #888; line-height: 1; padding: 4px 8px; border-radius: 8px; transition: background 0.2s, color 0.2s; }
+    .modal-close:hover { background: rgba(0,0,0,0.06); color: #0e0e0e; }
+    .modal-body { overflow-y: auto; flex: 1; }
+
+    /* Demo pages */
+    .demo-page { font-family: 'Inter', sans-serif; color: #0e0e0e; }
+    .demo-nav { display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; background: #fff; border-bottom: 1px solid rgba(0,0,0,0.07); position: sticky; top: 0; z-index: 10; }
+    .demo-nav-logo { font-weight: 800; font-size: 15px; letter-spacing: -0.3px; }
+    .demo-nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .demo-nav-links a { font-size: 12px; color: #555; text-decoration: none; }
+    .demo-nav-cta { font-size: 12px; font-weight: 600; background: #0e0e0e; color: #fff; padding: 8px 16px; border-radius: 100px; text-decoration: none; }
+    .demo-hero { padding: 3.5rem 2rem; background: #0e0e0e; color: #f7f5f0; text-align: center; }
+    .demo-hero-tag { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.5; margin-bottom: 1rem; }
+    .demo-hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 800; letter-spacing: -1px; margin-bottom: 1rem; line-height: 1.1; }
+    .demo-hero p { font-size: 13px; opacity: 0.65; max-width: 400px; margin: 0 auto 1.5rem; line-height: 1.7; }
+    .demo-hero-btn { display: inline-block; background: #f7f5f0; color: #0e0e0e; font-size: 13px; font-weight: 600; padding: 12px 24px; border-radius: 100px; text-decoration: none; }
+    .demo-section { padding: 2rem 2rem; border-bottom: 1px solid rgba(0,0,0,0.07); }
+    .demo-section:last-child { border-bottom: none; }
+    .demo-section-label { font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #999; margin-bottom: 0.4rem; }
+    .demo-section h2 { font-family: 'Syne', sans-serif; font-size: 1.35rem; font-weight: 800; margin-bottom: 1rem; letter-spacing: -0.3px; }
+    .demo-section p { font-size: 13px; color: #555; line-height: 1.7; }
+    .demo-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1rem; }
+    .demo-info-item { background: #fff; border-radius: 12px; padding: 1rem 1.1rem; border: 1px solid rgba(0,0,0,0.07); }
+    .demo-info-item strong { font-size: 12px; display: block; margin-bottom: 3px; }
+    .demo-info-item span { font-size: 12px; color: #666; }
+    .demo-wa-btn { display: inline-flex; align-items: center; gap: 8px; background: #25d366; color: #fff; font-size: 13px; font-weight: 600; padding: 12px 22px; border-radius: 100px; text-decoration: none; margin-top: 1rem; }
+    .demo-form { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.65rem; }
+    .demo-input { background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 10px; padding: 11px 14px; font-size: 13px; color: #333; width: 100%; box-sizing: border-box; }
+    .demo-submit { background: #0e0e0e; color: #fff; border: none; border-radius: 100px; padding: 13px; font-size: 13px; font-weight: 600; cursor: pointer; width: 100%; }
+    .demo-social { display: flex; gap: 0.65rem; margin-top: 1rem; flex-wrap: wrap; }
+    .demo-social a { font-size: 12px; color: #555; background: #fff; border: 1px solid rgba(0,0,0,0.1); padding: 7px 14px; border-radius: 100px; text-decoration: none; }
+    .demo-gallery { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.65rem; margin-top: 1rem; }
+    .demo-gallery-item { border-radius: 10px; aspect-ratio: 4/3; background: #e8e5df; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #aaa; }
+    .demo-services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-top: 1rem; }
+    .demo-service-item { background: #fff; border-radius: 12px; padding: 1rem 1.1rem; border: 1px solid rgba(0,0,0,0.07); }
+    .demo-service-item strong { font-size: 13px; display: block; margin-bottom: 3px; }
+    .demo-service-item span { font-size: 12px; color: #666; }
+    .demo-map { background: #e8e5df; border-radius: 12px; height: 110px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #aaa; margin-top: 1rem; }
+    .demo-catalog-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.65rem; margin-top: 1rem; }
+    .demo-product { background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid rgba(0,0,0,0.07); }
+    .demo-product-img { background: #e8e5df; height: 75px; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #aaa; }
+    .demo-product-info { padding: 0.65rem; }
+    .demo-product-info strong { font-size: 12px; display: block; }
+    .demo-product-info span { font-size: 11px; color: #888; }
+    .demo-product-btn { display: block; margin: 0.4rem 0.65rem 0.65rem; background: #0e0e0e; color: #fff; font-size: 11px; font-weight: 600; padding: 7px 0; border-radius: 8px; text-align: center; text-decoration: none; }
+    .demo-cart { background: #fff; border-radius: 12px; padding: 1rem 1.1rem; border: 1px solid rgba(0,0,0,0.07); margin-top: 1rem; }
+    .demo-cart p { font-size: 12px; color: #aaa; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 0.65rem; }
+    .demo-cart-item { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid rgba(0,0,0,0.06); font-size: 13px; }
+    .demo-cart-total { display: flex; justify-content: space-between; font-size: 14px; font-weight: 700; padding-top: 0.65rem; margin-top: 0.15rem; }
+    .demo-booking { background: #fff; border-radius: 12px; padding: 1rem 1.1rem; border: 1px solid rgba(0,0,0,0.07); margin-top: 1rem; }
+    .demo-booking-label { font-size: 11px; color: #aaa; margin-bottom: 0.5rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+    .demo-booking-slots { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+    .demo-slot { background: #f7f5f0; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 6px 14px; font-size: 12px; cursor: pointer; }
+    .demo-slot.selected { background: #0e0e0e; color: #fff; border-color: #0e0e0e; }
+
+    .plan-preview-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: transparent;
+      color: #555;
+      border: 1px solid rgba(0,0,0,0.15);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 11px 20px;
+      border-radius: 100px;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom: 0.6rem;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .plan-preview-btn:hover { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.3); color: #0e0e0e; }
+
     .contacto-section {
       padding: 6rem 3rem;
       display: grid;
@@ -405,18 +774,23 @@
       .servicios-grid { grid-template-columns: 1fr; }
       .servicio-item { border-right: none !important; border-bottom: 1px solid rgba(0,0,0,0.08) !important; }
       .servicio-item:last-child { border-bottom: none !important; }
+      .planes-grid { grid-template-columns: 1fr; }
+      .plan-card.destacado { transform: none; }
     }
   </style>
 </head>
 <body>
 
 <nav>
-  <a href="#" class="nav-logo">Ulises</a>
+  <a href="#" class="nav-logo">Zerboni</a>
   <ul class="nav-links">
     <li><a href="#proyectos">Proyectos</a></li>
     <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#planes">Planes</a></li>
+    <li><a href="#testimonios">Testimonios</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
+  <span class="nav-disponible">Disponible para proyectos</span>
 </nav>
 
 <section class="hero">
@@ -491,27 +865,156 @@
   <div class="servicios-grid">
     <div class="servicio-item fade-up">
       <div class="servicio-num">01</div>
-      <span class="servicio-icon">🎨</span>
+      <span class="servicio-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </span>
       <h3>Diseño web</h3>
       <p>Sitios modernos adaptados al estilo y la identidad de tu negocio.</p>
     </div>
     <div class="servicio-item fade-up">
       <div class="servicio-num">02</div>
-      <span class="servicio-icon">📱</span>
+      <span class="servicio-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+      </span>
       <h3>100% adaptable</h3>
       <p>Tu sitio se ve perfecto en celulares, tablets y computadoras.</p>
     </div>
     <div class="servicio-item fade-up">
       <div class="servicio-num">03</div>
-      <span class="servicio-icon">💬</span>
+      <span class="servicio-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </span>
       <h3>Pedidos por WhatsApp</h3>
       <p>Integración directa para que tus clientes pidan al instante.</p>
     </div>
     <div class="servicio-item fade-up">
       <div class="servicio-num">04</div>
-      <span class="servicio-icon">☁️</span>
+      <span class="servicio-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </span>
       <h3>Online para siempre</h3>
       <p>Tu sitio alojado en la nube, disponible las 24 horas.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section class="section" id="planes">
+  <div class="section-header">
+    <span class="section-label">Planes</span>
+    <h2 class="section-title">Cuánto cuesta</h2>
+  </div>
+
+  <div class="planes-grid">
+    <div class="plan-card fade-up">
+      <p class="plan-nombre">Plan Básico</p>
+      <p class="plan-precio">$150.000</p>
+      <p class="plan-objetivo">Ideal para emprendedores que necesitan presencia online.</p>
+      <ul class="plan-features">
+        <li>Página de inicio profesional</li>
+        <li>Información del negocio</li>
+        <li>Botón de WhatsApp</li>
+        <li>Diseño adaptable a celulares</li>
+        <li>Formulario de contacto</li>
+        <li>Enlaces a redes sociales</li>
+      </ul>
+      <p class="plan-ejemplos"><strong>Para:</strong> barberías, peluquerías, electricistas, plomeros, abogados.</p>
+      <button class="plan-preview-btn" onclick="abrirModal('basico')">Ver ejemplo del plan →</button>
+      <a class="plan-btn" href="https://wa.me/5491122372040?text=Hola%20Ulises!%20Me%20interesa%20el%20Plan%20B%C3%A1sico%20para%20mi%20negocio." target="_blank">Consultar →</a>
+    </div>
+
+    <div class="plan-card destacado fade-up">
+      <span class="plan-tag">Más elegido</span>
+      <p class="plan-nombre">Plan Negocio</p>
+      <p class="plan-precio">$300.000</p>
+      <p class="plan-objetivo">Ideal para comercios y empresas que quieren destacar.</p>
+      <ul class="plan-features">
+        <li>Todo lo del Plan Básico</li>
+        <li>Hasta 5 secciones</li>
+        <li>Galería de imágenes</li>
+        <li>Servicios o productos</li>
+        <li>Google Maps</li>
+        <li>Diseño personalizado</li>
+        <li>Optimización de velocidad</li>
+      </ul>
+      <p class="plan-ejemplos"><strong>Para:</strong> gimnasios, estudios contables, inmobiliarias, talleres, centros de estética.</p>
+      <button class="plan-preview-btn" onclick="abrirModal('negocio')">Ver ejemplo del plan  →</button>
+      <a class="plan-btn" href="https://wa.me/5491122372040?text=Hola%20Ulises!%20Me%20interesa%20el%20Plan%20Negocio%20para%20mi%20negocio." target="_blank">Consultar →</a>
+    </div>
+
+    <div class="plan-card fade-up">
+      <p class="plan-nombre">Plan Premium</p>
+      <p class="plan-precio">$450.000</p>
+      <p class="plan-objetivo">Ideal para negocios que quieren vender o automatizar pedidos.</p>
+      <ul class="plan-features">
+        <li>Todo lo del Plan Negocio</li>
+        <li>Catálogo de productos</li>
+        <li>Carrito de compras</li>
+        <li>Pedidos por WhatsApp</li>
+        <li>Sistema de reservas o turnos</li>
+        <li>SEO básico</li>
+        <li>Integraciones avanzadas</li>
+      </ul>
+      <p class="plan-ejemplos"><strong>Para:</strong> restaurantes, casas de comidas, hamburgueserías, tiendas de ropa, pet shops.</p>
+      <button class="plan-preview-btn" onclick="abrirModal('premium')">Ver ejemplo del plan →</button>
+      <a class="plan-btn" href="https://wa.me/5491122372040?text=Hola%20Ulises!%20Me%20interesa%20el%20Plan%20Premium%20para%20mi%20negocio." target="_blank">Consultar →</a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section class="section" id="testimonios">
+  <div class="section-header">
+    <span class="section-label">Clientes</span>
+    <h2 class="section-title">Reseñas</h2>
+  </div>
+
+  <div class="testimonios-grid">
+    <div class="testimonio-card fade-up">
+      <div>
+        <div class="testimonio-estrellas">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <p class="testimonio-texto">"Quedé muy conforme con el resultado. La página se ve profesional y ya recibo consultas por WhatsApp seguido. Vale cada peso."</p>
+      </div>
+      <div class="testimonio-autor">
+        <div class="testimonio-avatar" style="background:#c0673a;color:#fff;">M</div>
+        <div>
+          <p class="testimonio-nombre">Marcos R.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonio-card fade-up">
+      <div>
+        <div class="testimonio-estrellas">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <p class="testimonio-texto">"Rápido, prolijo y cumplió con todo lo que prometió. Me explicó cada paso y quedó justo como yo quería para mi local."</p>
+      </div>
+      <div class="testimonio-autor">
+        <div class="testimonio-avatar" style="background:#2d6a4f;color:#fff;">S</div>
+        <div>
+          <p class="testimonio-nombre">Sofía G.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonio-card fade-up">
+      <div>
+        <div class="testimonio-estrellas">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <p class="testimonio-texto">"Tenía miedo de que fuera complicado pero me guió en todo. Hoy mis clientes pueden ver el menú y pedir desde el celular sin llamar."</p>
+      </div>
+      <div class="testimonio-autor">
+        <div class="testimonio-avatar" style="background:#3d5a80;color:#fff;">D</div>
+        <div>
+          <p class="testimonio-nombre">Diego P.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -536,16 +1039,348 @@
 </section>
 
 <footer>
-  <span>Ulises · Diseño de paginas webs</span>
+  <span>Zerboni · Desarrollo web</span>
   <span>2026</span>
 </footer>
 
+<!-- MODAL PREVIEW -->
+<div class="modal-overlay" id="modalOverlay" onclick="cerrarModalFuera(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <div class="modal-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <span class="modal-plan-label" id="modalLabel">Vista previa</span>
+      </div>
+      <button class="modal-close" onclick="cerrarModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
 <script>
 window.onload = function() { window.scrollTo(0, 0); };
+
+// Observer unificado: fade-up + animación de precios
+const fmt = n => '$' + Math.floor(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+function animarPrecio(el) {
+  const numero = parseInt(el.getAttribute('data-precio'));
+  if (isNaN(numero)) return;
+  const duracion = 900;
+  const inicio = performance.now();
+  function step(now) {
+    const t = Math.min((now - inicio) / duracion, 1);
+    const ease = 1 - Math.pow(1 - t, 3);
+    el.textContent = fmt(numero * ease);
+    if (t < 1) requestAnimationFrame(step);
+    else el.textContent = fmt(numero);
+  }
+  requestAnimationFrame(step);
+}
+
 const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    if (e.target.classList.contains('fade-up')) e.target.classList.add('visible');
+    if (e.target.classList.contains('plan-precio') && !e.target.dataset.animado) {
+      e.target.dataset.animado = '1';
+      animarPrecio(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+document.querySelectorAll('.plan-precio').forEach(el => {
+  el.setAttribute('data-precio', parseInt(el.textContent.replace(/\$|\./g, '')));
+  observer.observe(el);
+});
+
+const demos = {
+  basico: {
+    label: 'Plan Básico — Vista previa',
+    html: `
+      <div class="demo-page">
+        <nav class="demo-nav">
+          <span class="demo-nav-logo">Mi Negocio</span>
+          <ul class="demo-nav-links">
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Nosotros</a></li>
+            <li><a href="#">Contacto</a></li>
+          </ul>
+          <a class="demo-nav-cta" href="#">Escribinos</a>
+        </nav>
+
+        <div class="demo-hero">
+          <p class="demo-hero-tag">Servicio profesional · Zona sur GBA</p>
+          <h1>Tu solución, a un mensaje de distancia.</h1>
+          <p>Ofrecemos un servicio confiable, rápido y de calidad para particulares y empresas.</p>
+          <a class="demo-hero-btn" href="#">Contactar por WhatsApp</a>
+        </div>
+
+        <div class="demo-section">
+          <p class="demo-section-label">Quiénes somos</p>
+          <h2>Sobre nosotros</h2>
+          <p>Somos un emprendimiento familiar con más de 10 años de experiencia en el rubro. Trabajamos con responsabilidad, puntualidad y garantía en cada trabajo que realizamos.</p>
+          <div class="demo-info-grid">
+            <div class="demo-info-item"><strong>Horario</strong><span>Lun–Vie 8:00 a 18:00</span></div>
+            <div class="demo-info-item"><strong>Zona</strong><span>GBA Zona Sur y CABA</span></div>
+            <div class="demo-info-item"><strong>Experiencia</strong><span>+10 años en el rubro</span></div>
+            <div class="demo-info-item"><strong>Teléfono</strong><span>11 XXXX-XXXX</span></div>
+          </div>
+          <a class="demo-wa-btn" href="#">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Escribir por WhatsApp
+          </a>
+        </div>
+
+        <div class="demo-section">
+          <p class="demo-section-label">Contacto</p>
+          <h2>Envianos un mensaje</h2>
+          <div class="demo-form">
+            <input class="demo-input" placeholder="Tu nombre" disabled>
+            <input class="demo-input" placeholder="Tu email" disabled>
+            <textarea class="demo-input" placeholder="¿En qué te podemos ayudar?" rows="3" disabled></textarea>
+            <button class="demo-submit" disabled>Enviar mensaje</button>
+          </div>
+          <div class="demo-social">
+            <a href="#">Instagram</a>
+            <a href="#">Facebook</a>
+            <a href="#">TikTok</a>
+          </div>
+        </div>
+      </div>
+    `
+  },
+
+  negocio: {
+    label: 'Plan Negocio — Vista previa',
+    html: `
+      <div class="demo-page">
+        <nav class="demo-nav">
+          <span class="demo-nav-logo">Mi Negocio</span>
+          <ul class="demo-nav-links">
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Nosotros</a></li>
+            <li><a href="#">Servicios</a></li>
+            <li><a href="#">Galería</a></li>
+            <li><a href="#">Contacto</a></li>
+          </ul>
+          <a class="demo-nav-cta" href="#">Consultar</a>
+        </nav>
+
+        <div class="demo-hero">
+          <p class="demo-hero-tag">Profesional · Confiable · Zona sur GBA</p>
+          <h1>Más de 10 años haciendo lo que nos apasiona.</h1>
+          <p>Un negocio que creció con el barrio. Calidad, trato personalizado y resultados reales.</p>
+          <a class="demo-hero-btn" href="#">Ver servicios</a>
+        </div>
+
+        <div class="demo-section">
+          <p class="demo-section-label">Nosotros</p>
+          <h2>¿Quiénes somos?</h2>
+          <p>Somos un equipo comprometido con dar el mejor servicio en cada trabajo. Atendemos tanto a particulares como a empresas de la zona, con presupuesto sin cargo y respuesta rápida.</p>
+          <div class="demo-info-grid">
+            <div class="demo-info-item"><strong>Fundado</strong><span>2014</span></div>
+            <div class="demo-info-item"><strong>Zona de cobertura</strong><span>GBA Sur y CABA</span></div>
+            <div class="demo-info-item"><strong>Horario</strong><span>Lun–Sáb 8:00 a 19:00</span></div>
+            <div class="demo-info-item"><strong>Clientes atendidos</strong><span>+500</span></div>
+          </div>
+        </div>
+
+        <div class="demo-section">
+          <p class="demo-section-label">Servicios</p>
+          <h2>Lo que ofrecemos</h2>
+          <div class="demo-services-grid">
+            <div class="demo-service-item"><strong>Servicio A</strong><span>Descripción breve del servicio principal que ofrecés.</span></div>
+            <div class="demo-service-item"><strong>Servicio B</strong><span>Otro servicio destacado con entrega en el día.</span></div>
+            <div class="demo-service-item"><strong>Servicio C</strong><span>Atención personalizada y garantía incluida.</span></div>
+            <div class="demo-service-item"><strong>Servicio D</strong><span>Presupuesto sin cargo y respuesta inmediata.</span></div>
+          </div>
+        </div>
+
+        <div class="demo-section">
+          <p class="demo-section-label">Galería</p>
+          <h2>Nuestros trabajos</h2>
+          <div class="demo-gallery">
+            <div class="demo-gallery-item">Foto 1</div>
+            <div class="demo-gallery-item">Foto 2</div>
+            <div class="demo-gallery-item">Foto 3</div>
+            <div class="demo-gallery-item">Foto 4</div>
+            <div class="demo-gallery-item">Foto 5</div>
+            <div class="demo-gallery-item">Foto 6</div>
+          </div>
+        </div>
+
+        <div class="demo-section">
+          <p class="demo-section-label">Ubicación</p>
+          <h2>Dónde estamos</h2>
+          <div class="demo-map">📍 Mapa interactivo (Google Maps)</div>
+        </div>
+
+        <div class="demo-section">
+          <p class="demo-section-label">Contacto</p>
+          <h2>Hablemos</h2>
+          <div class="demo-form">
+            <input class="demo-input" placeholder="Tu nombre" disabled>
+            <input class="demo-input" placeholder="Tu email" disabled>
+            <textarea class="demo-input" placeholder="Contanos en qué te podemos ayudar" rows="3" disabled></textarea>
+            <button class="demo-submit" disabled>Enviar consulta</button>
+          </div>
+          <div class="demo-social">
+            <a href="#">Instagram</a>
+            <a href="#">Facebook</a>
+            <a href="#">TikTok</a>
+            <a href="#">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    `
+  },
+
+  premium: {
+    label: 'Plan Premium — Vista previa',
+    html: `
+      <div class="demo-page">
+        <nav class="demo-nav">
+          <span class="demo-nav-logo">Mi Negocio</span>
+          <ul class="demo-nav-links">
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Catálogo</a></li>
+            <li><a href="#">Reservas</a></li>
+            <li><a href="#">Promociones</a></li>
+            <li><a href="#">Contacto</a></li>
+          </ul>
+          <a class="demo-nav-cta" href="#">Pedir ahora</a>
+        </nav>
+
+        <div class="demo-hero">
+          <p class="demo-hero-tag">Pedidos online · Reservas · Entregas</p>
+          <h1>Lo que necesitás, cuando lo necesitás.</h1>
+          <p>Pedí desde donde estés, elegí tu horario y recibilo en tu puerta o retirá en el local.</p>
+          <a class="demo-hero-btn" href="#">Ver catálogo</a>
+        </div>
+
+        <div class="demo-section">
+          <p class="demo-section-label">Catálogo</p>
+          <h2>Nuestros productos</h2>
+          <div class="demo-catalog-grid">
+            <div class="demo-product">
+              <div class="demo-product-img">Foto</div>
+              <div class="demo-product-info"><strong>Producto A</strong><span>$X.XXX</span></div>
+              <a class="demo-product-btn" href="#">Agregar</a>
+            </div>
+            <div class="demo-product">
+              <div class="demo-product-img">Foto</div>
+              <div class="demo-product-info"><strong>Producto B</strong><span>$X.XXX</span></div>
+              <a class="demo-product-btn" href="#">Agregar</a>
+            </div>
+            <div class="demo-product">
+              <div class="demo-product-img">Foto</div>
+              <div class="demo-product-info"><strong>Producto C</strong><span>$X.XXX</span></div>
+              <a class="demo-product-btn" href="#">Agregar</a>
+            </div>
+            <div class="demo-product">
+              <div class="demo-product-img">Foto</div>
+              <div class="demo-product-info"><strong>Producto D</strong><span>$X.XXX</span></div>
+              <a class="demo-product-btn" href="#">Agregar</a>
+            </div>
+            <div class="demo-product">
+              <div class="demo-product-img">Foto</div>
+              <div class="demo-product-info"><strong>Producto E</strong><span>$X.XXX</span></div>
+              <a class="demo-product-btn" href="#">Agregar</a>
+            </div>
+            <div class="demo-product">
+              <div class="demo-product-img">Foto</div>
+              <div class="demo-product-info"><strong>Producto F</strong><span>$X.XXX</span></div>
+              <a class="demo-product-btn" href="#">Agregar</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-section">
+          <p class="demo-section-label">Carrito</p>
+          <h2>Tu pedido</h2>
+          <div class="demo-cart">
+            <p>Resumen</p>
+            <div class="demo-cart-item"><span>Producto A × 2</span><span>$X.XXX</span></div>
+            <div class="demo-cart-item"><span>Producto C × 1</span><span>$X.XXX</span></div>
+            <div class="demo-cart-total"><span>Total</span><span>$XX.XXX</span></div>
+          </div>
+          <a class="demo-wa-btn" style="margin-top:1rem" href="#">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Pedir por WhatsApp
+          </a>
+        </div>
+
+        <div class="demo-section">
+          <p class="demo-section-label">Reservas</p>
+          <h2>Elegí tu turno</h2>
+          <div class="demo-booking">
+            <div class="demo-booking-label">Horarios disponibles</div>
+            <div class="demo-booking-slots">
+              <span class="demo-slot">9:00</span>
+              <span class="demo-slot selected">10:30</span>
+              <span class="demo-slot">12:00</span>
+              <span class="demo-slot">14:00</span>
+              <span class="demo-slot">15:30</span>
+              <span class="demo-slot">17:00</span>
+            </div>
+            <button class="demo-submit" disabled>Confirmar turno por WhatsApp</button>
+          </div>
+        </div>
+
+        <div class="demo-section">
+          <p class="demo-section-label">Promociones</p>
+          <h2>Ofertas de la semana</h2>
+          <div class="demo-services-grid">
+            <div class="demo-service-item"><strong>2x1 los martes</strong><span>En productos seleccionados del catálogo.</span></div>
+            <div class="demo-service-item"><strong>Envío gratis</strong><span>En pedidos superiores a $X.XXX dentro de la zona.</span></div>
+          </div>
+        </div>
+
+        <div class="demo-section">
+          <p class="demo-section-label">Ubicación</p>
+          <h2>Dónde encontrarnos</h2>
+          <div class="demo-map">📍 Mapa interactivo (Google Maps)</div>
+        </div>
+      </div>
+    `
+  }
+};
+
+const WA = '5491122372040';
+
+const Modal = {
+  abrir(plan) {
+    const overlay = document.getElementById('modalOverlay');
+    document.getElementById('modalBody').innerHTML = demos[plan].html;
+    document.getElementById('modalLabel').textContent = demos[plan].label;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  },
+  cerrar() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  },
+  cerrarFuera(e) {
+    if (e.target === document.getElementById('modalOverlay')) Modal.cerrar();
+  }
+};
+
+// Expongo al scope global solo lo necesario para los onclick del HTML
+const abrirModal = p => Modal.abrir(p);
+const cerrarModal = () => Modal.cerrar();
+const cerrarModalFuera = e => Modal.cerrarFuera(e);
+
+// Actualiza dinámicamente los links de WhatsApp usando la variable centralizada
+document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
+  a.href = a.href.replace(/wa\.me\/\d+/, `wa.me/${WA}`);
+});
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') Modal.cerrar(); });
 </script>
 
 </body>

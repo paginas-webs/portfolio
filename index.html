@@ -3,10 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zerboni · Desarrollo web</title>
+  <title>Ulises · Desarrollo web</title>
   <meta name="description" content="Diseño y desarrollo páginas web para locales, comercios y emprendimientos del GBA. Sitios profesionales, rápidos y adaptados a celular. Consultá sin cargo.">
-  <meta name="author" content="Zerboni">
+  <meta name="author" content="Ulises">
   <link rel="canonical" href="https://paginas-webs.github.io/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://paginas-webs.github.io/">
+  <meta property="og:title" content="Ulises · Desarrollo web">
+  <meta property="og:description" content="Diseño y desarrollo páginas web para locales, comercios y emprendimientos del GBA. Sitios profesionales, rápidos y adaptados a celular. Consultá sin cargo.">
+  <meta property="og:image" content="https://paginas-webs.github.io/og-image.jpg">
+  <meta property="og:locale" content="es_AR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ulises · Desarrollo web">
+  <meta name="twitter:description" content="Diseño y desarrollo páginas web para locales, comercios y emprendimientos del GBA. Sitios profesionales, rápidos y adaptados a celular. Consultá sin cargo.">
+  <meta name="twitter:image" content="https://paginas-webs.github.io/og-image.jpg">
+
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -88,6 +103,22 @@
       justify-content: center;
       padding: 0 3rem;
       gap: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid-deco {
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 320px;
+      height: 320px;
+      background-image: radial-gradient(circle, rgba(14,14,14,0.14) 1.5px, transparent 1.5px);
+      background-size: 22px 22px;
+      mask-image: radial-gradient(circle at center, black, transparent 75%);
+      -webkit-mask-image: radial-gradient(circle at center, black, transparent 75%);
+      pointer-events: none;
+      z-index: 0;
     }
 
     .hero-tag {
@@ -99,6 +130,8 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: #888;
+      position: relative;
+      z-index: 1;
     }
 
     .hero-tag::before {
@@ -116,6 +149,8 @@
       line-height: 1.05;
       letter-spacing: -2px;
       max-width: 820px;
+      position: relative;
+      z-index: 1;
     }
 
     .hero-bottom {
@@ -124,6 +159,8 @@
       align-items: flex-end;
       gap: 2rem;
       flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
     }
 
     .hero-desc {
@@ -157,7 +194,7 @@
       margin: 0 3rem;
     }
 
-    .section { padding: 6rem 3rem; }
+    .section { padding: 6rem 3rem; scroll-margin-top: 80px; }
 
     .section-header {
       display: flex;
@@ -614,6 +651,7 @@
     .demo-info-item span { font-size: 12px; color: #666; }
     .demo-wa-btn { display: inline-flex; align-items: center; gap: 8px; background: #25d366; color: #fff; font-size: 13px; font-weight: 600; padding: 12px 22px; border-radius: 100px; text-decoration: none; margin-top: 1rem; }
     .demo-form { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.65rem; }
+    .demo-form-note { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: #b08a3e; background: #fdf6e8; border: 1px solid rgba(176,138,62,0.25); border-radius: 8px; padding: 7px 10px; margin-bottom: 0.4rem; width: fit-content; }
     .demo-input { background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 10px; padding: 11px 14px; font-size: 13px; color: #333; width: 100%; box-sizing: border-box; }
     .demo-submit { background: #0e0e0e; color: #fff; border: none; border-radius: 100px; padding: 13px; font-size: 13px; font-weight: 600; cursor: pointer; width: 100%; }
     .demo-social { display: flex; gap: 0.65rem; margin-top: 1rem; flex-wrap: wrap; }
@@ -668,6 +706,7 @@
       grid-template-columns: 1fr 1fr;
       gap: 5rem;
       align-items: center;
+      scroll-margin-top: 80px;
     }
 
     .contacto-left h2 {
@@ -767,6 +806,43 @@
       .servicio-item:nth-child(3) { border-right: 1px solid rgba(0,0,0,0.08); }
     }
 
+    .wa-toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(12px);
+      background: #0e0e0e;
+      color: #f7f5f0;
+      padding: 12px 22px;
+      border-radius: 100px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      z-index: 2000;
+      white-space: nowrap;
+    }
+    .wa-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .wa-toast-spinner {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      border: 2px solid rgba(247,245,240,0.3);
+      border-top-color: #f7f5f0;
+      animation: wa-spin 0.7s linear infinite;
+      flex-shrink: 0;
+    }
+    @keyframes wa-spin { to { transform: rotate(360deg); } }
+
     @media (max-width: 500px) {
       .nav-links { display: none; }
       .hero h1 { letter-spacing: -1.5px; }
@@ -782,18 +858,19 @@
 <body>
 
 <nav>
-  <a href="#" class="nav-logo">Zerboni</a>
+  <a href="#" class="nav-logo">Ulises</a>
   <ul class="nav-links">
     <li><a href="#proyectos">Proyectos</a></li>
     <li><a href="#servicios">Servicios</a></li>
     <li><a href="#planes">Planes</a></li>
-    <li><a href="#testimonios">Reseñas</a></li>
+    <li><a href="#testimonios">Testimonios</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
   <span class="nav-disponible">Disponible para proyectos</span>
 </nav>
 
 <section class="hero">
+  <div class="hero-grid-deco" aria-hidden="true"></div>
   <p class="hero-tag">Diseño web · Desarrollo</p>
   <h1>La web que tu negocio necesita.</h1>
   <div class="hero-bottom">
@@ -920,7 +997,7 @@
         <li>Enlaces a redes sociales</li>
       </ul>
       <p class="plan-ejemplos"><strong>Para:</strong> barberías, peluquerías, electricistas, plomeros, abogados.</p>
-      <button class="plan-preview-btn" onclick="abrirModal('basico')">Ver ejemplo del plan →</button>
+      <button class="plan-preview-btn" onclick="abrirModal('basico')">Ver ejemplo →</button>
       <a class="plan-btn" href="https://wa.me/5491122372040?text=Hola%20Ulises!%20Me%20interesa%20el%20Plan%20B%C3%A1sico%20para%20mi%20negocio." target="_blank">Consultar →</a>
     </div>
 
@@ -939,7 +1016,7 @@
         <li>Optimización de velocidad</li>
       </ul>
       <p class="plan-ejemplos"><strong>Para:</strong> gimnasios, estudios contables, inmobiliarias, talleres, centros de estética.</p>
-      <button class="plan-preview-btn" onclick="abrirModal('negocio')">Ver ejemplo del plan  →</button>
+      <button class="plan-preview-btn" onclick="abrirModal('negocio')">Ver ejemplo →</button>
       <a class="plan-btn" href="https://wa.me/5491122372040?text=Hola%20Ulises!%20Me%20interesa%20el%20Plan%20Negocio%20para%20mi%20negocio." target="_blank">Consultar →</a>
     </div>
 
@@ -957,18 +1034,20 @@
         <li>Integraciones avanzadas</li>
       </ul>
       <p class="plan-ejemplos"><strong>Para:</strong> restaurantes, casas de comidas, hamburgueserías, tiendas de ropa, pet shops.</p>
-      <button class="plan-preview-btn" onclick="abrirModal('premium')">Ver ejemplo del plan →</button>
+      <button class="plan-preview-btn" onclick="abrirModal('premium')">Ver ejemplo →</button>
       <a class="plan-btn" href="https://wa.me/5491122372040?text=Hola%20Ulises!%20Me%20interesa%20el%20Plan%20Premium%20para%20mi%20negocio." target="_blank">Consultar →</a>
     </div>
   </div>
+
+  <p class="planes-nota">Precios sujetos a actualización según el contexto económico. Consultá por planes a medida.</p>
 </section>
 
 <hr class="divider">
 
 <section class="section" id="testimonios">
   <div class="section-header">
-    <span class="section-label">Clientes</span>
-    <h2 class="section-title">Reseñas</h2>
+    <span class="section-label">Testimonios</span>
+    <h2 class="section-title">Lo que dicen</h2>
   </div>
 
   <div class="testimonios-grid">
@@ -983,6 +1062,7 @@
         <div class="testimonio-avatar" style="background:#c0673a;color:#fff;">M</div>
         <div>
           <p class="testimonio-nombre">Marcos R.</p>
+          <p class="testimonio-rubro">Electricista · Lomas de Zamora</p>
         </div>
       </div>
     </div>
@@ -998,6 +1078,7 @@
         <div class="testimonio-avatar" style="background:#2d6a4f;color:#fff;">S</div>
         <div>
           <p class="testimonio-nombre">Sofía G.</p>
+          <p class="testimonio-rubro">Centro de estética · Quilmes</p>
         </div>
       </div>
     </div>
@@ -1013,6 +1094,7 @@
         <div class="testimonio-avatar" style="background:#3d5a80;color:#fff;">D</div>
         <div>
           <p class="testimonio-nombre">Diego P.</p>
+          <p class="testimonio-rubro">Casa de comidas · Morón</p>
         </div>
       </div>
     </div>
@@ -1039,11 +1121,16 @@
 </section>
 
 <footer>
-  <span>Zerboni · Desarrollo web</span>
+  <span>Ulises · Desarrollo web · Buenos Aires</span>
   <span>2026</span>
 </footer>
 
 <!-- MODAL PREVIEW -->
+<div class="wa-toast" id="waToast">
+  <span class="wa-toast-spinner" aria-hidden="true"></span>
+  <span>Abriendo WhatsApp...</span>
+</div>
+
 <div class="modal-overlay" id="modalOverlay" onclick="cerrarModalFuera(event)">
   <div class="modal-box">
     <div class="modal-header">
@@ -1140,6 +1227,7 @@ const demos = {
           <p class="demo-section-label">Contacto</p>
           <h2>Envianos un mensaje</h2>
           <div class="demo-form">
+            <span class="demo-form-note">⚠ Ejemplo visual — no funcional</span>
             <input class="demo-input" placeholder="Tu nombre" disabled>
             <input class="demo-input" placeholder="Tu email" disabled>
             <textarea class="demo-input" placeholder="¿En qué te podemos ayudar?" rows="3" disabled></textarea>
@@ -1224,6 +1312,7 @@ const demos = {
           <p class="demo-section-label">Contacto</p>
           <h2>Hablemos</h2>
           <div class="demo-form">
+            <span class="demo-form-note">⚠ Ejemplo visual — no funcional</span>
             <input class="demo-input" placeholder="Tu nombre" disabled>
             <input class="demo-input" placeholder="Tu email" disabled>
             <textarea class="demo-input" placeholder="Contanos en qué te podemos ayudar" rows="3" disabled></textarea>
@@ -1328,6 +1417,7 @@ const demos = {
               <span class="demo-slot">15:30</span>
               <span class="demo-slot">17:00</span>
             </div>
+            <span class="demo-form-note">⚠ Ejemplo visual — no funcional</span>
             <button class="demo-submit" disabled>Confirmar turno por WhatsApp</button>
           </div>
         </div>
@@ -1379,6 +1469,28 @@ const cerrarModalFuera = e => Modal.cerrarFuera(e);
 document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
   a.href = a.href.replace(/wa\.me\/\d+/, `wa.me/${WA}`);
 });
+
+// Feedback visual al hacer click en cualquier botón que lleve a WhatsApp
+(() => {
+  const toast = document.getElementById('waToast');
+  let toastTimer = null;
+
+  document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
+    link.addEventListener('click', e => {
+      const href = link.href;
+      e.preventDefault();
+
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+
+      window.open(href, '_blank');
+
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 1800);
+    });
+  });
+})();
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') Modal.cerrar(); });
 </script>

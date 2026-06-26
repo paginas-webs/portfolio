@@ -773,12 +773,12 @@
       gap: 0.5rem;
     }
 
-    .fade-up {
+    .js-ready .fade-up {
       opacity: 0;
       transform: translateY(24px);
       transition: opacity 0.55s ease, transform 0.55s ease;
     }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .js-ready .fade-up.visible { opacity: 1; transform: translateY(0); }
 
     @media (max-width: 768px) {
       nav { padding: 1.25rem 1.5rem; }
@@ -896,7 +896,7 @@
   <div class="hero-bottom">
     <p class="hero-desc">Diseño y desarrollo páginas web para locales, comercios y emprendimientos que quieren tener presencia digital de verdad.</p>
     <div class="hero-cta-wrap">
-      <a href="https://wa.me/5491122372040?text=Hola%20Zerboni!%20Estaba%20interesado%20en%20una%20p%C3%A1gina%20web%20para%20mi%20negocio%20%F0%9F%98%80" class="hero-cta" target="_blank" rel="noopener noreferrer">Hablemos →</a>
+      <a href="https://wa.me/5491122372040?text=Hola%20Zerboni!%20Estaba%20interesado%20en%20una%20p%C3%A1gina%20web%20para%20mi%20negocio" class="hero-cta" target="_blank" rel="noopener noreferrer">Hablemos →</a>
       <span class="hero-cta-note">Consulta sin cargo</span>
     </div>
   </div>
@@ -918,7 +918,7 @@
       <div class="proyecto-info">
         <div class="proyecto-meta">
           <p class="proyecto-tipo">Gastronomía · Delivery</p>
-          <p class="proyecto-nombre">El Turco</p>
+          <h3 class="proyecto-nombre">El Turco</h3>
           <p class="proyecto-desc">Menú digital con carrito y pedidos por WhatsApp.</p>
         </div>
         <a class="proyecto-btn" href="https://paginas-webs.github.io/el-turco/" target="_blank" rel="noopener noreferrer" aria-label="Ver sitio de El Turco (se abre en una pestaña nueva)">Ver sitio →</a>
@@ -932,7 +932,7 @@
       <div class="proyecto-info">
         <div class="proyecto-meta">
           <p class="proyecto-tipo">Moda · E-commerce</p>
-          <p class="proyecto-nombre">KAIRO Botas</p>
+          <h3 class="proyecto-nombre">KAIRO Botas</h3>
           <p class="proyecto-desc">Tienda online con carrito, favoritos y talles.</p>
         </div>
         <a class="proyecto-btn" href="https://paginas-webs.github.io/kairo-botas/" target="_blank" rel="noopener noreferrer" aria-label="Ver sitio de KAIRO Botas (se abre en una pestaña nueva)">Ver sitio →</a>
@@ -946,7 +946,7 @@
       <div class="proyecto-info">
         <div class="proyecto-meta">
           <p class="proyecto-tipo">Barbería · Turnos</p>
-          <p class="proyecto-nombre">The Barber</p>
+          <h3 class="proyecto-nombre">The Barber</h3>
           <p class="proyecto-desc">Sitio web para barbería con reserva de turnos.</p>
         </div>
         <a class="proyecto-btn" href="https://paginas-webs.github.io/The-barber/" target="_blank" rel="noopener noreferrer" aria-label="Ver sitio de The Barber (se abre en una pestaña nueva)">Ver sitio →</a>
@@ -1009,7 +1009,7 @@
 
   <div class="planes-grid">
     <div class="plan-card fade-up">
-      <p class="plan-nombre">Plan Básico</p>
+      <h3 class="plan-nombre">Plan Básico</h3>
       <p class="plan-precio">$150.000</p>
       <p class="plan-objetivo">Ideal para emprendedores que necesitan presencia online.</p>
       <ul class="plan-features">
@@ -1027,7 +1027,7 @@
 
     <div class="plan-card destacado fade-up">
       <span class="plan-tag">Más elegido</span>
-      <p class="plan-nombre">Plan Negocio</p>
+      <h3 class="plan-nombre">Plan Negocio</h3>
       <p class="plan-precio">$300.000</p>
       <p class="plan-objetivo">Ideal para comercios y empresas que quieren destacar.</p>
       <ul class="plan-features">
@@ -1045,7 +1045,7 @@
     </div>
 
     <div class="plan-card fade-up">
-      <p class="plan-nombre">Plan Premium</p>
+      <h3 class="plan-nombre">Plan Premium</h3>
       <p class="plan-precio">$450.000</p>
       <p class="plan-objetivo">Ideal para negocios que quieren vender o automatizar pedidos.</p>
       <ul class="plan-features">
@@ -1063,6 +1063,7 @@
     </div>
   </div>
 
+  <p class="planes-nota">Precios sujetos a actualización según el contexto económico. Consultá por planes a medida.</p>
 </section>
 
 <hr class="divider">
@@ -1111,6 +1112,14 @@
 </div>
 
 <script>
+document.documentElement.classList.add('js-ready');
+
+// Red de seguridad: si algo del script falla en cualquier punto,
+// el contenido con fade-up no debe quedar invisible para siempre.
+window.addEventListener('error', () => {
+  document.documentElement.classList.remove('js-ready');
+});
+
 window.onload = function() { window.scrollTo(0, 0); };
 
 // Observer unificado: fade-up + animación de precios
@@ -1430,13 +1439,21 @@ const WA = '5491122372040';
 
 const Modal = {
   ultimoFoco: null,
+  scrollY: 0,
 
   abrir(plan) {
     const overlay = document.getElementById('modalOverlay');
     document.getElementById('modalBody').innerHTML = demos[plan].html;
     document.getElementById('modalLabel').textContent = demos[plan].label;
     overlay.classList.add('open');
+
+    // overflow:hidden solo no alcanza para bloquear el scroll táctil
+    // en iOS Safari; sumamos position:fixed guardando la posición actual.
+    Modal.scrollY = window.scrollY;
     document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${Modal.scrollY}px`;
+    document.body.style.width = '100%';
 
     Modal.ultimoFoco = document.activeElement;
     const closeBtn = document.querySelector('.modal-close');
@@ -1456,6 +1473,10 @@ const Modal = {
   cerrar() {
     document.getElementById('modalOverlay').classList.remove('open');
     document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    window.scrollTo(0, Modal.scrollY);
     if (Modal.ultimoFoco && typeof Modal.ultimoFoco.focus === 'function') {
       Modal.ultimoFoco.focus();
     }

@@ -73,10 +73,10 @@
 <div class="admin-layout">
   <aside class="admin-sidebar">
     <h2>Panel de control</h2>
-    <button class="sidebar-link activo" onclick="mostrarPanel('propiedades')">🏠 Propiedades</button>
-    <button class="sidebar-link" onclick="mostrarPanel('consultas')">📩 Consultas</button>
-    <button class="sidebar-link" onclick="mostrarPanel('newsletter')">📧 Newsletter</button>
-    <button class="sidebar-link" onclick="mostrarPanel('estadisticas')">📊 Estadísticas</button>
+    <button class="sidebar-link activo" data-panel="propiedades" onclick="mostrarPanel('propiedades')">🏠 Propiedades</button>
+    <button class="sidebar-link" data-panel="consultas" onclick="mostrarPanel('consultas')">📩 Consultas</button>
+    <button class="sidebar-link" data-panel="newsletter" onclick="mostrarPanel('newsletter')">📧 Newsletter</button>
+    <button class="sidebar-link" data-panel="estadisticas" onclick="mostrarPanel('estadisticas')">📊 Estadísticas</button>
     <div style="flex:1"></div>
     <a href="inmobiliaria.html" class="sidebar-link" style="margin-top:auto">↗ Ver sitio público</a>
   </aside>
@@ -279,8 +279,9 @@ function eliminarProp(id){
 
 function mostrarPanel(panel){
   ['propiedades','consultas','newsletter','estadisticas'].forEach(p=>{const el=document.getElementById('panel-'+p);if(el)el.style.display=p===panel?'block':'none';});
-  document.querySelectorAll('.sidebar-link').forEach(l=>l.classList.remove('activo'));
-  document.querySelector(`.sidebar-link[onclick*="${panel}"]`).classList.add('activo');
+  document.querySelectorAll('.sidebar-link[data-panel]').forEach(l=>l.classList.remove('activo'));
+  const activeLink=document.querySelector(`.sidebar-link[data-panel="${panel}"]`);
+  if(activeLink) activeLink.classList.add('activo');
   const titles={propiedades:'Propiedades',consultas:'Consultas recibidas',newsletter:'Newsletter',estadisticas:'Estadísticas'};
   document.getElementById('adminTitulo').textContent=titles[panel]||'';
   document.getElementById('btnAgregar').style.display=panel==='propiedades'?'':'none';

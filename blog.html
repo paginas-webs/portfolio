@@ -130,12 +130,12 @@
 
 <!-- CATEGORÍAS -->
 <div class="blog-cats">
-  <button class="cat-btn activo" onclick="filtrarCat('')">Todos</button>
-  <button class="cat-btn" onclick="filtrarCat('mercado')">📈 Mercado</button>
-  <button class="cat-btn" onclick="filtrarCat('consejos')">💡 Consejos</button>
-  <button class="cat-btn" onclick="filtrarCat('legal')">⚖️ Legal</button>
-  <button class="cat-btn" onclick="filtrarCat('inversion')">💰 Inversión</button>
-  <button class="cat-btn" onclick="filtrarCat('lifestyle')">🏡 Lifestyle</button>
+  <button class="cat-btn activo" data-cat="" onclick="filtrarCat('')">Todos</button>
+  <button class="cat-btn" data-cat="mercado" onclick="filtrarCat('mercado')">📈 Mercado</button>
+  <button class="cat-btn" data-cat="consejos" onclick="filtrarCat('consejos')">💡 Consejos</button>
+  <button class="cat-btn" data-cat="legal" onclick="filtrarCat('legal')">⚖️ Legal</button>
+  <button class="cat-btn" data-cat="inversion" onclick="filtrarCat('inversion')">💰 Inversión</button>
+  <button class="cat-btn" data-cat="lifestyle" onclick="filtrarCat('lifestyle')">🏡 Lifestyle</button>
 </div>
 
 <!-- LAYOUT -->
@@ -349,7 +349,7 @@ function renderBlog(arts) {
 function filtrarCat(cat) {
   catActual = cat; busqueda = '';
   document.getElementById('searchInput').value = '';
-  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.toggle('activo', b.getAttribute('onclick')===`filtrarCat('${cat}')`||(cat===''&&b.getAttribute('onclick')==="filtrarCat('')")));
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.toggle('activo', b.dataset.cat===cat));
   renderBlog(cat ? ARTS.filter(a=>a.cat===cat) : ARTS);
 }
 

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin · Altamira Propiedades</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="inmobiliaria.css">
+  <style>
+  .admin-layout{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 70px)}
+  .admin-sidebar{background:var(--negro);padding:2rem 1.5rem;display:flex;flex-direction:column;gap:.5rem;border-right:1px solid rgba(255,255,255,0.06)}
+  .admin-sidebar h2{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:#F5F4F0;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid rgba(255,255,255,0.08)}
+  .sidebar-link{display:flex;align-items:center;gap:10px;padding:.75rem 1rem;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.5);font-size:14px;font-weight:500;transition:background var(--trans),color var(--trans);border:none;background:none;cursor:pointer;width:100%;text-align:left}
+  .sidebar-link:hover{background:rgba(255,255,255,0.07);color:#F5F4F0}
+  .sidebar-link.activo{background:rgba(201,169,110,0.15);color:var(--dorado)}
+  .admin-main{padding:2.5rem 3rem;background:var(--fondo2)}
+  .admin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;flex-wrap:wrap;gap:1rem}
+  .admin-titulo{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:var(--negro);letter-spacing:-0.5px}
+  .admin-cards-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+  .kpi-card{background:var(--card-bg);border:1px solid var(--card-borde);border-radius:var(--radio-lg);padding:1.5rem;display:flex;flex-direction:column;gap:4px}
+  .kpi-val{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--negro)}
+  .kpi-lbl{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--gris)}
+  .kpi-delta{font-size:12px;color:#22c55e;font-weight:500;margin-top:4px}
+  .panel{background:var(--card-bg);border:1px solid var(--card-borde);border-radius:var(--radio-lg);overflow:hidden;margin-bottom:1.5rem}
+  .panel-header{padding:1.25rem 1.75rem;border-bottom:1px solid var(--gris-borde);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+  .panel-titulo{font-size:15px;font-weight:600;color:var(--negro)}
+  .table-wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse}
+  th{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gris);padding:.85rem 1.25rem;text-align:left;background:var(--fondo2);border-bottom:1px solid var(--gris-borde)}
+  td{padding:.9rem 1.25rem;font-size:14px;color:var(--negro);border-bottom:1px solid var(--gris-borde);vertical-align:middle}
+  tr:last-child td{border-bottom:none}
+  tr:hover td{background:var(--fondo2)}
+  .estado-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:600}
+  .estado-badge.activo{background:rgba(34,197,94,0.1);color:#16a34a}
+  .estado-badge.pausado{background:rgba(234,179,8,0.1);color:#b45309}
+  .estado-badge.vendido{background:rgba(239,68,68,0.1);color:#dc2626}
+  .td-actions{display:flex;gap:.5rem}
+  .btn-sm{padding:6px 14px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:background var(--trans)}
+  .btn-edit{background:var(--fondo2);color:var(--negro)}.btn-edit:hover{background:var(--gris-borde)}
+  .btn-del{background:rgba(239,68,68,0.08);color:#dc2626}.btn-del:hover{background:rgba(239,68,68,0.18)}
+  /* form agregar */
+  .add-form{display:none;padding:1.75rem}.add-form.visible{display:block}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+  .form-grid.tres{grid-template-columns:1fr 1fr 1fr}
+  .fg{display:flex;flex-direction:column;gap:6px}
+  .fg label{font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gris)}
+  .fg input,.fg select,.fg textarea{border:1px solid var(--gris-borde);border-radius:10px;padding:11px 13px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--negro);background:var(--blanco);outline:none;transition:border-color var(--trans);appearance:none;width:100%}
+  .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--dorado)}
+  .fg-full{grid-column:1/-1}
+  .form-actions{display:flex;gap:.75rem;margin-top:1.25rem}
+  .btn-guardar{background:var(--negro);color:var(--blanco);border:none;border-radius:100px;padding:12px 26px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:background var(--trans)}
+  .btn-guardar:hover{background:var(--dorado);color:#1A1A1A}
+  .btn-cancelar{background:transparent;color:var(--gris);border:1px solid var(--gris-borde);border-radius:100px;padding:12px 26px;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:border-color var(--trans)}
+  .btn-cancelar:hover{border-color:var(--negro);color:var(--negro)}
+  .toast{position:fixed;bottom:2rem;right:2rem;background:var(--negro);color:#F5F4F0;padding:1rem 1.5rem;border-radius:12px;font-size:14px;font-weight:500;z-index:9999;opacity:0;transform:translateY(10px);transition:opacity .3s,transform .3s;pointer-events:none}
+  .toast.visible{opacity:1;transform:translateY(0)}
+  @media(max-width:900px){.admin-layout{grid-template-columns:1fr}.admin-sidebar{display:none}.admin-cards-row{grid-template-columns:1fr 1fr}.admin-main{padding:1.5rem}}
+  @media(max-width:600px){.admin-cards-row{grid-template-columns:1fr}.form-grid,.form-grid.tres{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="inmobiliaria.html" class="nav-logo"><span class="nav-logo-name">Altamira</span><span class="nav-logo-tag">Admin</span></a>
+  <ul class="nav-links">
+    <li><a href="inmobiliaria.html">← Ver sitio</a></li>
+    <li><a href="blog.html">Blog</a></li>
+  </ul>
+  <button class="dark-toggle" id="darkToggle">🌙</button>
+</nav>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <h2>Panel de control</h2>
+    <button class="sidebar-link activo" onclick="mostrarPanel('propiedades')">🏠 Propiedades</button>
+    <button class="sidebar-link" onclick="mostrarPanel('consultas')">📩 Consultas</button>
+    <button class="sidebar-link" onclick="mostrarPanel('newsletter')">📧 Newsletter</button>
+    <button class="sidebar-link" onclick="mostrarPanel('estadisticas')">📊 Estadísticas</button>
+    <div style="flex:1"></div>
+    <a href="inmobiliaria.html" class="sidebar-link" style="margin-top:auto">↗ Ver sitio público</a>
+  </aside>
+
+  <main class="admin-main">
+    <!-- KPIs -->
+    <div class="admin-header">
+      <h1 class="admin-titulo" id="adminTitulo">Propiedades</h1>
+      <button class="btn-dark" onclick="toggleAddForm()" id="btnAgregar">+ Agregar propiedad</button>
+    </div>
+
+    <div class="admin-cards-row">
+      <div class="kpi-card"><span class="kpi-val">5</span><span class="kpi-lbl">Propiedades activas</span><span class="kpi-delta">↑ 2 este mes</span></div>
+      <div class="kpi-card"><span class="kpi-val">23</span><span class="kpi-lbl">Consultas recibidas</span><span class="kpi-delta">↑ 8 esta semana</span></div>
+      <div class="kpi-card"><span class="kpi-val">148</span><span class="kpi-lbl">Visitas al sitio (hoy)</span><span class="kpi-delta">↑ 12%</span></div>
+      <div class="kpi-card"><span class="kpi-val">312</span><span class="kpi-lbl">Suscriptores newsletter</span><span class="kpi-delta">↑ 5 esta semana</span></div>
+    </div>
+
+    <!-- PANEL PROPIEDADES -->
+    <div id="panel-propiedades">
+      <!-- FORM AGREGAR -->
+      <div class="panel" id="addFormWrap">
+        <div class="panel-header">
+          <p class="panel-titulo" id="formTitulo">Nueva propiedad</p>
+        </div>
+        <div class="add-form" id="addForm">
+          <div class="form-grid">
+            <div class="fg"><label>Título</label><input type="text" id="fp-titulo" placeholder="Ej: Casa con pileta en Nordelta"></div>
+            <div class="fg"><label>Tipo</label><select id="fp-tipo"><option>Departamento</option><option>Casa</option><option>PH</option><option>Local comercial</option><option>Terreno</option></select></div>
+          </div>
+          <div class="form-grid tres">
+            <div class="fg"><label>Operación</label><select id="fp-op"><option value="venta">Venta</option><option value="alquiler">Alquiler</option></select></div>
+            <div class="fg"><label>Precio</label><input type="text" id="fp-precio" placeholder="USD 150.000 o $900.000/mes"></div>
+            <div class="fg"><label>Zona / Barrio</label><input type="text" id="fp-zona" placeholder="Palermo, CABA"></div>
+          </div>
+          <div class="form-grid tres">
+            <div class="fg"><label>Dormitorios</label><input type="number" id="fp-dorm" min="0" placeholder="2"></div>
+            <div class="fg"><label>Baños</label><input type="number" id="fp-ban" min="0" placeholder="1"></div>
+            <div class="fg"><label>Superficie (m²)</label><input type="number" id="fp-sup" min="0" placeholder="80"></div>
+          </div>
+          <div class="form-grid">
+            <div class="fg"><label>URL foto principal</label><input type="url" id="fp-foto" placeholder="https://…"></div>
+            <div class="fg"><label>Estado</label><select id="fp-estado"><option value="activo">Activo</option><option value="pausado">Pausado</option></select></div>
+          </div>
+          <div class="form-grid" style="grid-template-columns:1fr">
+            <div class="fg fg-full"><label>Descripción</label><textarea id="fp-desc" rows="3" placeholder="Descripción detallada de la propiedad…"></textarea></div>
+          </div>
+          <div class="fg" style="margin-bottom:1rem"><label>Amenities (separados por coma)</label><input type="text" id="fp-amenities" placeholder="Pileta, Cochera, Quincho, Seguridad 24hs"></div>
+          <div class="form-actions">
+            <button class="btn-guardar" onclick="guardarPropiedad()">Guardar propiedad</button>
+            <button class="btn-cancelar" onclick="toggleAddForm()">Cancelar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABLA -->
+      <div class="panel">
+        <div class="panel-header">
+          <p class="panel-titulo">Listado de propiedades</p>
+          <input type="text" placeholder="Buscar…" oninput="filtrarTabla(this.value)" style="border:1px solid var(--gris-borde);border-radius:8px;padding:8px 12px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--negro);background:var(--blanco);outline:none;width:200px;transition:border-color var(--trans)" onfocus="this.style.borderColor='var(--dorado)'" onblur="this.style.borderColor='var(--gris-borde)'">
+        </div>
+        <div class="table-wrap">
+          <table id="propTable">
+            <thead><tr><th>Propiedad</th><th>Tipo</th><th>Operación</th><th>Precio</th><th>Zona</th><th>Estado</th><th>Acciones</th></tr></thead>
+            <tbody id="propTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL CONSULTAS -->
+    <div id="panel-consultas" style="display:none">
+      <div class="panel">
+        <div class="panel-header"><p class="panel-titulo">Consultas recibidas</p></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Nombre</th><th>Propiedad</th><th>Teléfono</th><th>Fecha</th><th>Canal</th><th>Acciones</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Martín Gómez</strong></td><td>Casa en Nordelta</td><td>+54 11 5555-1234</td><td>Hoy 14:22</td><td><span class="estado-badge activo">WhatsApp</span></td><td><div class="td-actions"><button class="btn-sm btn-edit" onclick="toast('Responder en WhatsApp…')">Responder</button></div></td></tr>
+              <tr><td><strong>Laura Fernández</strong></td><td>Depto Palermo</td><td>+54 11 4444-5678</td><td>Hoy 11:05</td><td><span class="estado-badge activo">Email</span></td><td><div class="td-actions"><button class="btn-sm btn-edit" onclick="toast('Abriendo email…')">Responder</button></div></td></tr>
+              <tr><td><strong>Ricardo Vidal</strong></td><td>PH Belgrano</td><td>+54 11 3333-9012</td><td>Ayer 18:40</td><td><span class="estado-badge activo">WhatsApp</span></td><td><div class="td-actions"><button class="btn-sm btn-edit" onclick="toast('Responder en WhatsApp…')">Responder</button></div></td></tr>
+              <tr><td><strong>Sofía Morales</strong></td><td>Local San Telmo</td><td>+54 11 2222-3456</td><td>Ayer 09:15</td><td><span class="estado-badge pausado">Formulario</span></td><td><div class="td-actions"><button class="btn-sm btn-edit">Responder</button></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL NEWSLETTER -->
+    <div id="panel-newsletter" style="display:none">
+      <div class="panel">
+        <div class="panel-header"><p class="panel-titulo">Suscriptores</p><button class="btn-sm btn-edit" onclick="toast('Exportando CSV…')">Exportar CSV</button></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Email</th><th>Fecha de suscripción</th><th>Estado</th></tr></thead>
+            <tbody>
+              <tr><td>valeria.moreno@gmail.com</td><td>15/06/2025</td><td><span class="estado-badge activo">Activo</span></td></tr>
+              <tr><td>martin.fernandez@outlook.com</td><td>12/06/2025</td><td><span class="estado-badge activo">Activo</span></td></tr>
+              <tr><td>carolina.vidal@yahoo.com</td><td>08/06/2025</td><td><span class="estado-badge activo">Activo</span></td></tr>
+              <tr><td>ricardo.gomez@gmail.com</td><td>01/06/2025</td><td><span class="estado-badge pausado">Dado de baja</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL ESTADÍSTICAS -->
+    <div id="panel-estadisticas" style="display:none">
+      <div class="panel" style="padding:2rem">
+        <p class="panel-titulo" style="margin-bottom:1.5rem">Visitas por propiedad (últimos 30 días)</p>
+        <div style="display:flex;flex-direction:column;gap:.75rem" id="statsChart"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* dark mode */
+(()=>{const t=document.getElementById('darkToggle');const apply=d=>{document.documentElement.setAttribute('data-theme',d?'dark':'light');t.textContent=d?'☀️':'🌙';try{localStorage.setItem('theme',d?'dark':'light');}catch(e){}};try{apply(localStorage.getItem('theme')==='dark');}catch(e){apply(false);}t.addEventListener('click',()=>apply(document.documentElement.getAttribute('data-theme')!=='dark'));})();
+
+/* data */
+let props=[
+  {id:1,titulo:'Casa con pileta en Nordelta',tipo:'Casa',op:'venta',precio:'USD 485.000',zona:'Nordelta, Tigre',estado:'activo'},
+  {id:2,titulo:'2 ambientes con balcón en Palermo',tipo:'Departamento',op:'venta',precio:'USD 128.000',zona:'Palermo, CABA',estado:'activo'},
+  {id:3,titulo:'PH con terraza propia en Belgrano',tipo:'PH',op:'alquiler',precio:'$950.000/mes',zona:'Belgrano, CABA',estado:'activo'},
+  {id:4,titulo:'3 ambientes con vista al parque',tipo:'Departamento',op:'venta',precio:'USD 210.000',zona:'Recoleta, CABA',estado:'activo'},
+  {id:5,titulo:'Local comercial — San Telmo',tipo:'Local',op:'alquiler',precio:'$680.000/mes',zona:'San Telmo, CABA',estado:'activo'},
+];
+let nextId=6, formMode='add', editId=null;
+
+function renderTable(data) {
+  const tbody=document.getElementById('propTableBody');
+  tbody.innerHTML=data.map(p=>`
+    <tr data-id="${p.id}">
+      <td><strong>${p.titulo}</strong></td>
+      <td>${p.tipo}</td>
+      <td><span class="estado-badge ${p.op==='venta'?'activo':'pausado'}">${p.op==='venta'?'Venta':'Alquiler'}</span></td>
+      <td>${p.precio}</td>
+      <td>${p.zona}</td>
+      <td><span class="estado-badge ${p.estado}">${p.estado==='activo'?'Activo':p.estado==='pausado'?'Pausado':'Vendido'}</span></td>
+      <td><div class="td-actions">
+        <button class="btn-sm btn-edit" onclick="editarProp(${p.id})">Editar</button>
+        <button class="btn-sm btn-del" onclick="eliminarProp(${p.id})">Eliminar</button>
+      </div></td>
+    </tr>`).join('');
+}
+
+function filtrarTabla(q){const r=q.toLowerCase();renderTable(props.filter(p=>p.titulo.toLowerCase().includes(r)||p.zona.toLowerCase().includes(r)));}
+
+function toggleAddForm(){
+  const f=document.getElementById('addForm');
+  const visible=f.classList.toggle('visible');
+  document.getElementById('btnAgregar').textContent=visible?'✕ Cerrar':'+ Agregar propiedad';
+  if(!visible){resetForm();}
+}
+
+function resetForm(){
+  ['fp-titulo','fp-precio','fp-zona','fp-foto','fp-desc','fp-amenities','fp-dorm','fp-ban','fp-sup'].forEach(id=>document.getElementById(id).value='');
+  formMode='add'; editId=null;
+  document.getElementById('formTitulo').textContent='Nueva propiedad';
+  document.getElementById('fp-estado').value='activo';
+}
+
+function guardarPropiedad(){
+  const titulo=document.getElementById('fp-titulo').value.trim();
+  if(!titulo){alert('El título es obligatorio.');return;}
+  if(formMode==='add'){
+    props.push({id:nextId++,titulo,tipo:document.getElementById('fp-tipo').value,op:document.getElementById('fp-op').value,precio:document.getElementById('fp-precio').value||'—',zona:document.getElementById('fp-zona').value||'—',estado:document.getElementById('fp-estado').value});
+    toast('✅ Propiedad agregada correctamente');
+  } else {
+    const idx=props.findIndex(p=>p.id===editId);
+    if(idx>-1){props[idx]={...props[idx],titulo,tipo:document.getElementById('fp-tipo').value,op:document.getElementById('fp-op').value,precio:document.getElementById('fp-precio').value,zona:document.getElementById('fp-zona').value,estado:document.getElementById('fp-estado').value};}
+    toast('✅ Propiedad actualizada');
+  }
+  renderTable(props); toggleAddForm();
+}
+
+function editarProp(id){
+  const p=props.find(x=>x.id===id); if(!p) return;
+  formMode='edit'; editId=id;
+  document.getElementById('fp-titulo').value=p.titulo;
+  document.getElementById('fp-tipo').value=p.tipo;
+  document.getElementById('fp-op').value=p.op;
+  document.getElementById('fp-precio').value=p.precio;
+  document.getElementById('fp-zona').value=p.zona;
+  document.getElementById('fp-estado').value=p.estado;
+  document.getElementById('formTitulo').textContent='Editar propiedad';
+  const f=document.getElementById('addForm');
+  if(!f.classList.contains('visible')) toggleAddForm();
+  f.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function eliminarProp(id){
+  if(!confirm('¿Eliminar esta propiedad?')) return;
+  props=props.filter(p=>p.id!==id); renderTable(props);
+  toast('🗑 Propiedad eliminada');
+}
+
+function mostrarPanel(panel){
+  ['propiedades','consultas','newsletter','estadisticas'].forEach(p=>{const el=document.getElementById('panel-'+p);if(el)el.style.display=p===panel?'block':'none';});
+  document.querySelectorAll('.sidebar-link').forEach(l=>l.classList.remove('activo'));
+  document.querySelector(`.sidebar-link[onclick*="${panel}"]`).classList.add('activo');
+  const titles={propiedades:'Propiedades',consultas:'Consultas recibidas',newsletter:'Newsletter',estadisticas:'Estadísticas'};
+  document.getElementById('adminTitulo').textContent=titles[panel]||'';
+  document.getElementById('btnAgregar').style.display=panel==='propiedades'?'':'none';
+  if(panel==='estadisticas') renderStats();
+}
+
+function renderStats(){
+  const data=[{n:'Casa en Nordelta',v:412},{n:'Depto Palermo',v:287},{n:'PH Belgrano',v:198},{n:'Depto Recoleta',v:176},{n:'Local San Telmo',v:143}];
+  const max=data[0].v;
+  document.getElementById('statsChart').innerHTML=data.map(d=>`
+    <div style="display:flex;align-items:center;gap:1rem">
+      <span style="font-size:13px;color:var(--gris);min-width:200px">${d.n}</span>
+      <div style="flex:1;height:28px;background:var(--fondo2);border-radius:6px;overflow:hidden">
+        <div style="height:100%;width:${(d.v/max*100).toFixed(0)}%;background:var(--dorado);border-radius:6px;transition:width .8s ease"></div>
+      </div>
+      <span style="font-size:13px;font-weight:600;color:var(--negro);min-width:40px;text-align:right">${d.v}</span>
+    </div>`).join('');
+}
+
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('visible');setTimeout(()=>t.classList.remove('visible'),3000);}
+
+renderTable(props);
+</script>
+</body>
+</html>

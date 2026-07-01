@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog · Altamira Propiedades</title>
+  <meta name="description" content="Novedades del mercado inmobiliario argentino, consejos para comprar, vender y alquilar propiedades. Blog de Altamira Propiedades.">
+  <link rel="canonical" href="https://altamirapropiedades.com.ar/blog">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Blog","name":"Blog · Altamira Propiedades","url":"https://altamirapropiedades.com.ar/blog","publisher":{"@type":"Organization","name":"Altamira Propiedades"}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="inmobiliaria.css">
+  <style>
+  .blog-hero{background:var(--negro);padding:6rem 4rem 4rem;position:relative;overflow:hidden}
+  .blog-hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=1400&auto=format&fit=crop&q=60') center/cover;opacity:.18}
+  .blog-hero-inner{position:relative;z-index:1;max-width:680px}
+  .blog-hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,4rem);font-weight:700;color:#F5F4F0;letter-spacing:-1.5px;line-height:1.05;margin-bottom:1rem}
+  .blog-hero p{font-size:16px;color:rgba(250,250,248,0.6);font-weight:300;line-height:1.8}
+
+  .blog-layout{display:grid;grid-template-columns:1fr 300px;gap:3rem;padding:4rem;align-items:start;max-width:1200px;margin:0 auto}
+  .blog-cats{display:flex;gap:.6rem;flex-wrap:wrap;padding:1.25rem 4rem;border-bottom:1px solid var(--gris-borde);background:var(--card-bg)}
+  .cat-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:100px;border:1px solid var(--gris-borde);background:transparent;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:var(--gris);cursor:pointer;transition:all var(--trans)}
+  .cat-btn:hover{border-color:var(--negro);color:var(--negro)}
+  .cat-btn.activo{background:var(--negro);color:var(--blanco);border-color:var(--negro)}
+  [data-theme="dark"] .cat-btn.activo{background:var(--dorado);color:#1A1A1A;border-color:var(--dorado)}
+
+  /* cards */
+  .blog-grid{display:flex;flex-direction:column;gap:2rem}
+  .blog-card{background:var(--card-bg);border:1px solid var(--card-borde);border-radius:var(--radio-lg);overflow:hidden;display:grid;grid-template-columns:280px 1fr;transition:transform var(--trans),box-shadow var(--trans);cursor:pointer}
+  .blog-card:hover{transform:translateY(-4px);box-shadow:var(--sombra-hover)}
+  .blog-card.featured{grid-template-columns:1fr;grid-row:span 1}
+  .blog-card.featured .blog-card-img{aspect-ratio:16/7}
+  .blog-card-img{overflow:hidden;background:var(--fondo2)}
+  .blog-card-img img{width:100%;height:100%;object-fit:cover;display:block;aspect-ratio:4/3;transition:transform .4s ease}
+  .blog-card:hover .blog-card-img img{transform:scale(1.04)}
+  .blog-card-body{padding:1.75rem;display:flex;flex-direction:column;justify-content:space-between}
+  .blog-cat-tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--dorado);margin-bottom:.6rem}
+  .blog-card-titulo{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--negro);letter-spacing:-0.3px;line-height:1.25;margin-bottom:.6rem}
+  .blog-card.featured .blog-card-titulo{font-size:1.6rem}
+  .blog-card-excerpt{font-size:14px;color:var(--gris);line-height:1.7;margin-bottom:1.25rem}
+  .blog-card-meta{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+  .blog-autor{display:flex;align-items:center;gap:8px}
+  .blog-autor-avatar{width:32px;height:32px;border-radius:50%;background:var(--fondo2);display:flex;align-items:center;justify-content:center;font-size:14px}
+  .blog-autor-info{display:flex;flex-direction:column;gap:1px}
+  .blog-autor-nombre{font-size:12px;font-weight:600;color:var(--negro)}
+  .blog-autor-fecha{font-size:11px;color:var(--gris)}
+  .blog-leer{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--negro);text-decoration:none;border-bottom:1px solid var(--negro);padding-bottom:1px;transition:color var(--trans),border-color var(--trans)}
+  .blog-leer:hover{color:var(--dorado);border-color:var(--dorado)}
+  .blog-tiempo{font-size:11px;color:var(--gris);display:flex;align-items:center;gap:4px}
+
+  /* sidebar */
+  .blog-sidebar{position:sticky;top:90px;display:flex;flex-direction:column;gap:1.5rem}
+  .sidebar-widget{background:var(--card-bg);border:1px solid var(--card-borde);border-radius:var(--radio-lg);padding:1.5rem}
+  .widget-titulo{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--negro);margin-bottom:1.25rem;letter-spacing:-0.2px}
+  .widget-search{display:flex;border:1px solid var(--gris-borde);border-radius:10px;overflow:hidden;transition:border-color var(--trans)}
+  .widget-search:focus-within{border-color:var(--dorado)}
+  .widget-search input{flex:1;border:none;padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--negro);background:transparent;outline:none}
+  .widget-search button{background:var(--negro);border:none;padding:0 14px;cursor:pointer;color:#F5F4F0;font-size:14px;transition:background var(--trans)}
+  .widget-search button:hover{background:var(--dorado);color:#1A1A1A}
+  .reciente-item{display:flex;gap:10px;padding:.75rem 0;border-bottom:1px solid var(--gris-borde);cursor:pointer;transition:opacity var(--trans)}
+  .reciente-item:last-child{border-bottom:none;padding-bottom:0}
+  .reciente-item:hover{opacity:.7}
+  .reciente-img{width:56px;height:42px;border-radius:8px;overflow:hidden;flex-shrink:0}
+  .reciente-img img{width:100%;height:100%;object-fit:cover}
+  .reciente-titulo{font-size:12px;font-weight:600;color:var(--negro);line-height:1.4;margin-bottom:3px}
+  .reciente-fecha{font-size:11px;color:var(--gris)}
+  .tag-cloud{display:flex;flex-wrap:wrap;gap:.5rem}
+  .tag{display:inline-flex;background:var(--fondo2);border-radius:100px;padding:5px 12px;font-size:12px;font-weight:500;color:var(--negro);cursor:pointer;transition:background var(--trans),color var(--trans)}
+  .tag:hover{background:var(--dorado);color:#1A1A1A}
+
+  /* artículo individual */
+  .articulo-overlay{position:fixed;inset:0;background:var(--blanco);z-index:500;overflow-y:auto;transform:translateX(100%);transition:transform .4s cubic-bezier(.4,0,.2,1)}
+  .articulo-overlay.abierto{transform:translateX(0)}
+  .articulo-header{position:sticky;top:0;background:rgba(250,250,248,0.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--gris-borde);padding:1rem 2rem;display:flex;align-items:center;gap:1rem;z-index:10}
+  [data-theme="dark"] .articulo-header{background:rgba(22,22,24,0.96)}
+  .articulo-back{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--negro);cursor:pointer;display:flex;align-items:center;gap:6px;transition:color var(--trans)}
+  .articulo-back:hover{color:var(--dorado)}
+  .articulo-inner{max-width:760px;margin:0 auto;padding:3rem 2rem 6rem}
+  .articulo-cat{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--dorado);margin-bottom:1rem}
+  .articulo-titulo{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;color:var(--negro);letter-spacing:-1px;line-height:1.1;margin-bottom:1.25rem}
+  .articulo-meta{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid var(--gris-borde)}
+  .articulo-img{width:100%;border-radius:var(--radio-lg);overflow:hidden;margin-bottom:2.5rem}
+  .articulo-img img{width:100%;display:block;max-height:500px;object-fit:cover}
+  .articulo-content h2{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--negro);letter-spacing:-0.3px;margin:2rem 0 .75rem}
+  .articulo-content p{font-size:15px;color:var(--gris);line-height:1.85;margin-bottom:1.25rem}
+  .articulo-content blockquote{border-left:3px solid var(--dorado);padding:.75rem 1.5rem;margin:1.5rem 0;background:var(--fondo2);border-radius:0 8px 8px 0}
+  .articulo-content blockquote p{color:var(--negro);font-style:italic;font-size:16px;margin:0}
+  .articulo-content ul{padding-left:1.5rem;margin-bottom:1.25rem;display:flex;flex-direction:column;gap:.5rem}
+  .articulo-content li{font-size:15px;color:var(--gris);line-height:1.7}
+  .articulo-content li::marker{color:var(--dorado)}
+  .articulo-cta{background:var(--negro);border-radius:var(--radio-lg);padding:2rem;margin-top:2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem}
+  .articulo-cta p{font-size:16px;font-weight:500;color:#F5F4F0;max-width:420px}
+  .articulo-cta a{display:inline-flex;align-items:center;gap:8px;background:var(--dorado);color:#1A1A1A;font-size:14px;font-weight:600;padding:13px 24px;border-radius:100px;text-decoration:none;transition:background var(--trans),transform var(--trans);white-space:nowrap}
+  .articulo-cta a:hover{background:var(--dorado-claro);transform:translateY(-1px)}
+
+  @media(max-width:1000px){.blog-layout{grid-template-columns:1fr;padding:2rem}.blog-sidebar{position:static}.blog-cats{padding:1rem 2rem}}
+  @media(max-width:680px){.blog-card{grid-template-columns:1fr}.blog-card.featured .blog-card-img{aspect-ratio:16/9}.blog-hero{padding:4rem 2rem 3rem}}
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="inmobiliaria.html" class="nav-logo"><span class="nav-logo-name">Altamira</span><span class="nav-logo-tag">Propiedades</span></a>
+  <ul class="nav-links">
+    <li><a href="inmobiliaria.html">Inicio</a></li>
+    <li><a href="inmobiliaria.html#propiedades">Propiedades</a></li>
+    <li><a href="#" class="activo">Blog</a></li>
+    <li><a href="inmobiliaria.html#contacto" class="nav-cta">Consultar →</a></li>
+  </ul>
+  <button class="dark-toggle" id="darkToggle">🌙</button>
+  <button class="nav-ham" id="navHam"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="nav-mobile-overlay" id="navMobile" aria-hidden="true">
+  <a href="inmobiliaria.html" onclick="cerrarMenu()">Inicio</a>
+  <a href="inmobiliaria.html#propiedades" onclick="cerrarMenu()">Propiedades</a>
+  <a href="#" onclick="cerrarMenu()">Blog</a>
+  <a href="inmobiliaria.html#contacto" class="nav-mobile-cta" onclick="cerrarMenu()">Consultar →</a>
+</div>
+
+<!-- BLOG HERO -->
+<div class="blog-hero">
+  <div class="blog-hero-inner fade-up">
+    <p class="section-eyebrow" style="margin-bottom:.75rem">Novedades del mercado</p>
+    <h1>Ideas, consejos<br>y tendencias</h1>
+    <p>Todo lo que necesitás saber para tomar las mejores decisiones inmobiliarias.</p>
+  </div>
+</div>
+
+<!-- CATEGORÍAS -->
+<div class="blog-cats">
+  <button class="cat-btn activo" onclick="filtrarCat('')">Todos</button>
+  <button class="cat-btn" onclick="filtrarCat('mercado')">📈 Mercado</button>
+  <button class="cat-btn" onclick="filtrarCat('consejos')">💡 Consejos</button>
+  <button class="cat-btn" onclick="filtrarCat('legal')">⚖️ Legal</button>
+  <button class="cat-btn" onclick="filtrarCat('inversion')">💰 Inversión</button>
+  <button class="cat-btn" onclick="filtrarCat('lifestyle')">🏡 Lifestyle</button>
+</div>
+
+<!-- LAYOUT -->
+<div class="blog-layout">
+  <div>
+    <div class="blog-grid" id="blogGrid"></div>
+  </div>
+  <aside class="blog-sidebar">
+    <div class="sidebar-widget">
+      <p class="widget-titulo">Buscar artículos</p>
+      <div class="widget-search">
+        <input type="text" placeholder="Ej: hipoteca, palermo…" id="searchInput" oninput="buscarArt(this.value)">
+        <button>🔍</button>
+      </div>
+    </div>
+    <div class="sidebar-widget">
+      <p class="widget-titulo">Artículos recientes</p>
+      <div id="recientesWrap"></div>
+    </div>
+    <div class="sidebar-widget">
+      <p class="widget-titulo">Temas</p>
+      <div class="tag-cloud">
+        <span class="tag" onclick="filtrarCat('mercado')">Mercado</span>
+        <span class="tag" onclick="filtrarCat('consejos')">Consejos</span>
+        <span class="tag" onclick="filtrarCat('legal')">Legal</span>
+        <span class="tag" onclick="filtrarCat('inversion')">Inversión</span>
+        <span class="tag" onclick="filtrarCat('lifestyle')">Lifestyle</span>
+        <span class="tag">Escritura</span>
+        <span class="tag">Alquiler</span>
+        <span class="tag">Hipoteca</span>
+        <span class="tag">Zonas</span>
+      </div>
+    </div>
+    <div class="sidebar-widget" style="background:var(--dorado);border-color:var(--dorado)">
+      <p class="widget-titulo" style="color:#1A1A1A">¿Querés vender tu propiedad?</p>
+      <p style="font-size:13px;color:rgba(26,26,26,0.7);line-height:1.65;margin-bottom:1.25rem">Tasación gratuita y sin compromiso en menos de 48 horas.</p>
+      <a href="inmobiliaria.html#tasacion" class="btn-dark" style="width:100%;justify-content:center;background:#1A1A1A;color:#F5F4F0;text-decoration:none">Solicitar tasación →</a>
+    </div>
+  </aside>
+</div>
+
+<!-- ARTÍCULO OVERLAY -->
+<div class="articulo-overlay" id="artOverlay" role="dialog" aria-modal="true" aria-label="Artículo" aria-hidden="true">
+  <div class="articulo-header">
+    <button class="articulo-back" onclick="cerrarArt()">← Volver al blog</button>
+    <a href="inmobiliaria.html" class="nav-logo" style="margin-left:auto"><span class="nav-logo-name">Altamira</span><span class="nav-logo-tag">Blog</span></a>
+  </div>
+  <div class="articulo-inner">
+    <p class="articulo-cat" id="artCat"></p>
+    <h1 class="articulo-titulo" id="artTitulo"></h1>
+    <div class="articulo-meta">
+      <div class="blog-autor"><div class="blog-autor-avatar" id="artAvatar"></div><div class="blog-autor-info"><span class="blog-autor-nombre" id="artAutor"></span><span class="blog-autor-fecha" id="artFecha"></span></div></div>
+      <span class="blog-tiempo" id="artTiempo">⏱</span>
+    </div>
+    <div class="articulo-img"><img id="artImg" src="" alt=""></div>
+    <div class="articulo-content" id="artContent"></div>
+    <div class="articulo-cta">
+      <p>¿Tenés dudas sobre tu próxima operación inmobiliaria? Hablá con un asesor hoy.</p>
+      <a href="https://wa.me/5491100000000?text=Hola%2C%20leí%20un%20artículo%20en%20el%20blog%20y%20quiero%20consultar." target="_blank" rel="noopener">Consultar por WhatsApp →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="inmobiliaria.html" class="footer-logo">Altamira Propiedades</a>
+  <p>© 2025 Altamira Propiedades · Matrícula CUCICBA 7821</p>
+  <ul class="footer-links"><li><a href="inmobiliaria.html">Inicio</a></li><li><a href="inmobiliaria.html#contacto">Contacto</a></li></ul>
+</footer>
+
+<script>
+const ARTS = [
+  {
+    id:1, cat:'mercado', catLabel:'Mercado inmobiliario', featured:true,
+    titulo:'El mercado inmobiliario argentino en 2025: qué esperar para lo que resta del año',
+    excerpt:'Los precios en dólares muestran una recuperación sostenida en barrios premium de CABA. Analizamos los datos y las zonas con mayor potencial de revalorización.',
+    autor:'Marcelo Ortega', avatar:'👨', fecha:'18 jun 2025', tiempo:'7 min de lectura',
+    img:'https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=1200&auto=format&fit=crop&q=80',
+    content:`<h2>Un año de recuperación gradual</h2>
+<p>El mercado inmobiliario argentino cerró el primer semestre de 2025 con señales alentadoras: los precios en dólares en barrios premium de CABA registraron una suba promedio del 8% interanual, impulsados por la mayor estabilidad cambiaria y el regreso de compradores que habían postergado decisiones de compra.</p>
+<blockquote><p>"El comprador que estuvo esperando durante 2023 y 2024 hoy está tomando decisiones. La demanda contenida que se acumuló empieza a liberarse." — Marcelo Ortega, Gerente Comercial Altamira</p></blockquote>
+<h2>Zonas con mayor revalorización</h2>
+<p>Palermo, Belgrano R y Núñez lideraron las subas en el segmento residencial. En el corredor norte del GBA, Nordelta y Tigre Centro mantienen un crecimiento sostenido traccionado por la demanda de familias que buscan mayor espacio.</p>
+<ul>
+  <li>Palermo: +11% interanual en departamentos de 2 y 3 ambientes</li>
+  <li>Nordelta: +9% en casas de 3 dormitorios o más</li>
+  <li>Belgrano R: +7% en PH y plantas bajas</li>
+  <li>Recoleta: +6% en unidades clásicas recicladas</li>
+</ul>
+<h2>¿Qué esperar para el segundo semestre?</h2>
+<p>Los especialistas coinciden en que el segundo semestre mantendrá la tendencia positiva, aunque con mayor selectividad: los inmuebles bien ubicados, con buenas terminaciones y en precio de mercado seguirán rotando rápido, mientras que los sobrevaluados podrán demorar más en encontrar comprador.</p>
+<p>La clave para quien quiere vender en 2025 es contar con una tasación actualizada y una estrategia de precio competitiva desde el primer día de publicación.</p>`
+  },
+  {
+    id:2, cat:'consejos', catLabel:'Consejos prácticos', featured:false,
+    titulo:'Cómo escriturar una propiedad en Argentina: guía paso a paso 2025',
+    excerpt:'Todo lo que necesitás saber sobre el proceso de escrituración: documentación, plazos, costos y los errores más comunes que conviene evitar.',
+    autor:'Florencia Bas', avatar:'👩', fecha:'12 jun 2025', tiempo:'9 min de lectura',
+    img:'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=900&auto=format&fit=crop&q=80',
+    content:`<h2>¿Qué es la escritura y por qué es tan importante?</h2>
+<p>La escritura pública es el documento legal que transfiere la titularidad de un inmueble de un vendedor a un comprador. Sin escritura, la compraventa no tiene validez plena frente a terceros, aunque exista un boleto de compraventa firmado.</p>
+<h2>Documentación necesaria</h2>
+<ul>
+  <li>DNI vigente de vendedor y comprador</li>
+  <li>Título de propiedad antecedente</li>
+  <li>Certificados de libre deuda de expensas y servicios</li>
+  <li>Planos aprobados del inmueble</li>
+  <li>Inhibición y certificado de dominio (los gestiona el escribano)</li>
+  <li>Constancia de CUIT/CUIL de ambas partes</li>
+</ul>
+<h2>Costos involucrados</h2>
+<p>Los gastos de escrituración rondan el 2% al 4% del valor de la operación, dependiendo de la provincia. Incluyen honorarios del escribano, sellado fiscal, inscripción en el Registro de la Propiedad e impuesto de sellos. En CABA, el impuesto de sellos es del 2,5% sobre el valor mayor entre el precio convenido y la valuación fiscal.</p>
+<blockquote><p>Consejo: siempre pedí un presupuesto detallado al escribano antes de firmar el boleto. Los costos son negociables y varían entre escribanías.</p></blockquote>
+<h2>Plazos habituales</h2>
+<p>Desde la firma del boleto hasta la escritura, el proceso suele tomar entre 30 y 60 días hábiles. El plazo depende de la demora en obtener certificados y de la agenda de la escribanía elegida.</p>`
+  },
+  {
+    id:3, cat:'inversion', catLabel:'Inversión', featured:false,
+    titulo:'¿Conviene comprar para alquilar en 2025? Rentabilidad por barrio',
+    excerpt:'Analizamos la rentabilidad real del alquiler residencial en los principales barrios de CABA y GBA, con datos actualizados de junio 2025.',
+    autor:'Sebastián Torres', avatar:'👨', fecha:'05 jun 2025', tiempo:'6 min de lectura',
+    img:'https://images.unsplash.com/photo-1605146769289-440113cc3d00?w=900&auto=format&fit=crop&q=80',
+    content:`<h2>La rentabilidad del alquiler en números</h2>
+<p>Con la estabilización cambiaria de los últimos meses, la rentabilidad del alquiler residencial en CABA mejoró respecto a 2024. Un departamento de 2 ambientes en Palermo puede rendir entre el 4,5% y el 6% anual en pesos ajustados por inflación, lo que en términos reales representa una mejora frente al año anterior.</p>
+<h2>Mejores barrios para invertir</h2>
+<ul>
+  <li><strong>Palermo / Villa Crespo:</strong> alta demanda, rotación rápida de inquilinos, rentabilidad 5-6%</li>
+  <li><strong>Caballito / Almagro:</strong> ticket de entrada más bajo, buena rentabilidad 5,5-6,5%</li>
+  <li><strong>Núñez / Colegiales:</strong> perfil universitario, demanda sostenida, 4,5-5,5%</li>
+  <li><strong>San Telmo / Barracas:</strong> en desarrollo, alto potencial de revalorización</li>
+</ul>
+<blockquote><p>La clave no es solo la rentabilidad actual sino la perspectiva de revalorización del inmueble en el mediano plazo.</p></blockquote>
+<h2>¿Qué tipo de unidad rinde más?</h2>
+<p>Los monoambientes y 2 ambientes siguen siendo los más demandados en alquiler y los que muestran menor vacancia. Las unidades con amenities en edificios nuevos tienen mayor precio por m² pero también se alquilan más rápido y con menos problemas de mantenimiento.</p>`
+  },
+  {
+    id:4, cat:'legal', catLabel:'Legal', featured:false,
+    titulo:'Nueva ley de alquileres 2024/2025: todo lo que cambia para propietarios e inquilinos',
+    excerpt:'Las modificaciones al régimen de alquileres impactan directamente en plazos mínimos, índices de actualización y las condiciones del contrato. Te explicamos qué cambió.',
+    autor:'Florencia Bas', avatar:'👩', fecha:'28 may 2025', tiempo:'8 min de lectura',
+    img:'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=900&auto=format&fit=crop&q=80',
+    content:`<h2>Los cambios más relevantes</h2>
+<p>La reforma al marco legal de los alquileres introdujo modificaciones significativas respecto a la ley anterior. Los puntos más importantes para propietarios e inquilinos son el plazo mínimo del contrato, la frecuencia de actualización del precio y la libertad de las partes para acordar el índice de ajuste.</p>
+<h2>Plazo mínimo y actualización</h2>
+<ul>
+  <li>El plazo mínimo volvió a ser de 2 años para contratos residenciales</li>
+  <li>Las partes pueden acordar libremente el índice de actualización (ICL, IPC, CVS, o cualquier otro)</li>
+  <li>La frecuencia de actualización también puede ser pactada libremente: mensual, trimestral, semestral o anual</li>
+  <li>Se eliminó la obligatoriedad del índice ICL como único índice permitido</li>
+</ul>
+<h2>¿Qué conviene acordar en el contrato?</h2>
+<p>Para el propietario, los ajustes más frecuentes (mensuales o trimestrales) permiten seguir mejor la inflación y reducir el impacto de la pérdida de valor. Para el inquilino, los ajustes menos frecuentes dan mayor previsibilidad presupuestaria.</p>
+<blockquote><p>Recomendamos siempre contar con un asesor legal al momento de firmar el contrato, independientemente de si sos propietario o inquilino.</p></blockquote>`
+  },
+  {
+    id:5, cat:'lifestyle', catLabel:'Lifestyle', featured:false,
+    titulo:'Los barrios más buscados para vivir en Buenos Aires en 2025',
+    excerpt:'Qué buscan las familias jóvenes, los profesionales y los inversores al elegir barrio. Un recorrido por las zonas que están en el radar de los compradores este año.',
+    autor:'Marcelo Ortega', avatar:'👨', fecha:'20 may 2025', tiempo:'5 min de lectura',
+    img:'https://images.unsplash.com/photo-1589519160732-57fc498494f8?w=900&auto=format&fit=crop&q=80',
+    content:`<h2>El nuevo mapa de la demanda</h2>
+<p>El perfil del comprador porteño cambió en los últimos años. Las familias jóvenes priorizan cercanía a espacios verdes, buena conectividad y oferta gastronómica. Los profesionales sin hijos buscan ubicación central y acceso rápido al transporte. Los inversores siguen los barrios en transformación con mejores perspectivas de revalorización.</p>
+<h2>Los favoritos de 2025</h2>
+<ul>
+  <li><strong>Villa Crespo:</strong> el nuevo Palermo para quienes buscan precios más accesibles con la misma vibra</li>
+  <li><strong>Colegiales:</strong> tranquilo, verde, con buena gastronomía y en constante revalorización</li>
+  <li><strong>Núñez:</strong> ideal para familias, cerca del río y con excelentes colegios</li>
+  <li><strong>Caballito:</strong> el barrio "todo en uno", con alta oferta de servicios y buena conectividad</li>
+  <li><strong>San Telmo / Barracas:</strong> para perfiles creativos e inversores que buscan revalorización</li>
+</ul>
+<h2>La tendencia del GBA norte</h2>
+<p>Nordelta, Tigre Centro y los barrios cerrados del corredor norte siguen atrayendo a familias que priorizan espacio, seguridad y calidad de vida, dispuestas a asumir el costo del traslado diario a la ciudad.</p>`
+  }
+];
+
+let catActual = '', busqueda = '';
+
+function renderBlog(arts) {
+  const grid = document.getElementById('blogGrid');
+  if (!arts.length) { grid.innerHTML = '<p style="color:var(--gris);padding:2rem 0">No se encontraron artículos.</p>'; return; }
+  grid.innerHTML = arts.map((a, i) => `
+    <article class="blog-card${i===0&&!catActual&&!busqueda?' featured':''} fade-up" onclick="abrirArt(${a.id})" tabindex="0" role="button" aria-label="Leer: ${a.titulo}">
+      <div class="blog-card-img"><img src="${a.img}" alt="${a.titulo}" loading="${i<2?'eager':'lazy'}"></div>
+      <div class="blog-card-body">
+        <div>
+          <p class="blog-cat-tag">${a.catLabel}</p>
+          <h2 class="blog-card-titulo">${a.titulo}</h2>
+          <p class="blog-card-excerpt">${a.excerpt}</p>
+        </div>
+        <div class="blog-card-meta">
+          <div class="blog-autor">
+            <div class="blog-autor-avatar">${a.avatar}</div>
+            <div class="blog-autor-info"><span class="blog-autor-nombre">${a.autor}</span><span class="blog-autor-fecha">${a.fecha}</span></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:1rem">
+            <span class="blog-tiempo">⏱ ${a.tiempo}</span>
+            <span class="blog-leer">Leer →</span>
+          </div>
+        </div>
+      </div>
+    </article>`).join('');
+  // recientes
+  document.getElementById('recientesWrap').innerHTML = ARTS.slice(0,3).map(a=>`
+    <div class="reciente-item" onclick="abrirArt(${a.id})">
+      <div class="reciente-img"><img src="${a.img}" alt="${a.titulo}" loading="lazy"></div>
+      <div><p class="reciente-titulo">${a.titulo}</p><p class="reciente-fecha">${a.fecha}</p></div>
+    </div>`).join('');
+  document.querySelectorAll('.blog-card').forEach((el,i)=>{el.style.transitionDelay=(i*.08)+'s';fadeObs.observe(el);});
+  document.querySelectorAll('.blog-card').forEach(el=>{el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();el.click();}});});
+}
+
+function filtrarCat(cat) {
+  catActual = cat; busqueda = '';
+  document.getElementById('searchInput').value = '';
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.toggle('activo', b.getAttribute('onclick')===`filtrarCat('${cat}')`||(cat===''&&b.getAttribute('onclick')==="filtrarCat('')")));
+  renderBlog(cat ? ARTS.filter(a=>a.cat===cat) : ARTS);
+}
+
+function buscarArt(q) {
+  busqueda = q.toLowerCase();
+  const r = ARTS.filter(a=>a.titulo.toLowerCase().includes(busqueda)||a.excerpt.toLowerCase().includes(busqueda)||a.catLabel.toLowerCase().includes(busqueda));
+  renderBlog(r);
+}
+
+/* artículo */
+let scrollYBlog = 0;
+function abrirArt(id) {
+  const a = ARTS.find(x=>x.id===id); if(!a) return;
+  document.getElementById('artCat').textContent     = a.catLabel;
+  document.getElementById('artTitulo').textContent  = a.titulo;
+  document.getElementById('artAvatar').textContent  = a.avatar;
+  document.getElementById('artAutor').textContent   = a.autor;
+  document.getElementById('artFecha').textContent   = a.fecha;
+  document.getElementById('artTiempo').textContent  = '⏱ ' + a.tiempo;
+  document.getElementById('artImg').src             = a.img;
+  document.getElementById('artImg').alt             = a.titulo;
+  document.getElementById('artContent').innerHTML   = a.content;
+  const ov = document.getElementById('artOverlay');
+  ov.removeAttribute('aria-hidden'); ov.classList.add('abierto');
+  scrollYBlog = window.scrollY;
+  document.body.style.overflow = 'hidden';
+  ov.scrollTop = 0;
+  document.querySelector('.articulo-back').focus();
+  // JSON-LD artículo
+  let ld = document.getElementById('art-ld');
+  if(!ld){ld=document.createElement('script');ld.type='application/ld+json';ld.id='art-ld';document.head.appendChild(ld);}
+  ld.textContent = JSON.stringify({"@context":"https://schema.org","@type":"BlogPosting","headline":a.titulo,"image":a.img,"author":{"@type":"Person","name":a.autor},"publisher":{"@type":"Organization","name":"Altamira Propiedades"},"datePublished":a.fecha});
+}
+
+function cerrarArt() {
+  const ov = document.getElementById('artOverlay');
+  ov.classList.remove('abierto'); ov.setAttribute('aria-hidden','true');
+  document.body.style.overflow = '';
+  window.scrollTo(0, scrollYBlog);
+}
+
+document.addEventListener('keydown', e => {
+  if(e.key==='Escape' && document.getElementById('artOverlay').classList.contains('abierto')) cerrarArt();
+});
+
+/* dark mode */
+(()=>{const t=document.getElementById('darkToggle');const apply=d=>{document.documentElement.setAttribute('data-theme',d?'dark':'light');t.textContent=d?'☀️':'🌙';try{localStorage.setItem('theme',d?'dark':'light');}catch(e){}};try{apply(localStorage.getItem('theme')==='dark');}catch(e){apply(false);}t.addEventListener('click',()=>apply(document.documentElement.getAttribute('data-theme')!=='dark'));})();
+
+/* menú mobile */
+const ham=document.getElementById('navHam'),mob=document.getElementById('navMobile');
+function cerrarMenu(){ham.classList.remove('abierto');mob.classList.remove('abierto');mob.setAttribute('aria-hidden','true');document.body.style.overflow='';}
+ham.addEventListener('click',()=>{const a=mob.classList.toggle('abierto');ham.classList.toggle('abierto');mob.setAttribute('aria-hidden',!a);document.body.style.overflow=a?'hidden':'';});
+
+/* fade */
+const fadeObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.08});
+document.querySelectorAll('.fade-up').forEach(el=>fadeObs.observe(el));
+
+renderBlog(ARTS);
+</script>
+</body>
+</html>

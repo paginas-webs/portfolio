@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1A1A1A">
+  <title>Altamira Propiedades · Compra, Venta y Alquiler de Inmuebles Premium</title>
+  <meta name="description" content="Altamira Propiedades — Compra, venta y alquiler de inmuebles premium en Argentina. Más de 20 años de experiencia. Tasaciones gratuitas.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Altamira Propiedades · Bienes Raíces">
+  <meta property="og:description" content="Compra, venta y alquiler de inmuebles premium. Más de 20 años de experiencia.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&auto=format&fit=crop&q=80">
+  <meta property="og:locale" content="es_AR">
+  <link rel="canonical" href="https://altamirapropiedades.com.ar/">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"RealEstateAgent","name":"Altamira Propiedades","url":"https://altamirapropiedades.com.ar","telephone":"+541148000000","address":{"@type":"PostalAddress","streetAddress":"Av. Libertador 1234 Piso 8","addressLocality":"Buenos Aires","addressCountry":"AR"},"description":"Compra, venta y alquiler de inmuebles premium en Argentina."}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="inmobiliaria.css">
+  <style>
+  /* ══ HERO SLIDER + REVEAL ══ */
+  .hero{min-height:92vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 4rem 5rem;position:relative;overflow:hidden;background:#1A1A1A}
+  .hero-slides{position:absolute;inset:0;z-index:0}
+  .hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease;background-size:cover;background-position:center}
+  .hero-slide.activo{opacity:1}
+  .hero-slide::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(26,26,26,0.25) 0%,rgba(26,26,26,0.7) 60%,rgba(26,26,26,0.97) 100%)}
+  .hero-dots{position:absolute;top:2rem;right:4rem;display:flex;gap:8px;z-index:2}
+  .hero-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.35);border:none;cursor:pointer;transition:background var(--trans),transform var(--trans);padding:0}
+  .hero-dot.activo{background:var(--dorado);transform:scale(1.3)}
+
+  /* reveal por línea */
+  .hero-reveal{position:relative;z-index:1;overflow:hidden;margin-bottom:0}
+  .hero-reveal-inner{transform:translateY(110%);transition:transform .75s cubic-bezier(.16,1,.3,1)}
+  .hero-reveal.visible .hero-reveal-inner{transform:translateY(0)}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,6.5vw,6.5rem);font-weight:700;line-height:1;letter-spacing:-2px;color:#F5F4F0;max-width:800px;margin-bottom:0}
+  .hero h1 em{font-style:italic;color:var(--dorado-claro)}
+  .hero-eyebrow-wrap{position:relative;z-index:1;margin-bottom:1.5rem}
+  .hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--dorado)}
+  .hero-eyebrow::before{content:'';display:block;width:32px;height:1px;background:var(--dorado)}
+  .hero-sub-wrap{position:relative;z-index:1;margin-top:1.5rem;margin-bottom:3.5rem}
+  .hero-sub{font-size:16px;font-weight:300;color:rgba(250,250,248,0.65);max-width:420px;line-height:1.8}
+  .hero-search{position:relative;z-index:1;display:flex;background:var(--blanco);border-radius:var(--radio-lg);overflow:hidden;max-width:820px;box-shadow:0 24px 64px rgba(0,0,0,0.35)}
+  .search-group{display:flex;flex-direction:column;padding:1rem 1.5rem;flex:1;border-right:1px solid var(--gris-borde);min-width:0}
+  .search-label{font-size:10px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--gris);margin-bottom:4px}
+  .search-group select,.search-group input{border:none;outline:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--negro);width:100%;appearance:none}
+  .hero-search-btn{display:flex;align-items:center;gap:10px;background:var(--dorado);color:#1A1A1A;border:none;padding:0 2rem;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background var(--trans);flex-shrink:0}
+  .hero-search-btn:hover{background:#b8934a}
+
+  /* ══ CALC HIPOTECARIA ══ */
+  .calc-section{padding:1.5rem 2.5rem;border-top:1px solid var(--gris-borde);background:var(--fondo2)}
+  .calc-titulo{font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--gris);margin-bottom:1rem}
+  .calc-row{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:.75rem;align-items:end}
+  .calc-group{display:flex;flex-direction:column;gap:5px}
+  .calc-group label{font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gris)}
+  .calc-group input,.calc-group select{border:1px solid var(--gris-borde);border-radius:8px;padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--negro);background:var(--card-bg);outline:none;appearance:none;transition:border-color var(--trans)}
+  .calc-group input:focus,.calc-group select:focus{border-color:var(--dorado)}
+  .calc-btn{background:var(--negro);color:var(--blanco);border:none;border-radius:8px;padding:10px 18px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:background var(--trans);white-space:nowrap}
+  .calc-btn:hover{background:var(--dorado);color:#1A1A1A}
+  .calc-resultado{margin-top:1rem;display:none;gap:1.5rem;flex-wrap:wrap}
+  .calc-resultado.visible{display:flex}
+  .calc-dato{background:var(--card-bg);border:1px solid var(--gris-borde);border-radius:10px;padding:.75rem 1.25rem;display:flex;flex-direction:column;gap:3px}
+  .calc-dato-val{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--negro)}
+  .calc-dato-lbl{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gris)}
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="inmobiliaria.html" class="nav-logo">
+    <span class="nav-logo-name">Altamira</span>
+    <span class="nav-logo-tag">Propiedades</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#propiedades" class="activo">Propiedades</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#contacto" class="nav-cta">Consultar →</a></li>
+  </ul>
+  <button class="dark-toggle" id="darkToggle" aria-label="Cambiar tema">🌙</button>
+  <button class="nav-ham" id="navHam" aria-label="Abrir menú" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile-overlay" id="navMobile" aria-hidden="true">
+  <a href="#propiedades" onclick="cerrarMenu()">Propiedades</a>
+  <a href="#servicios" onclick="cerrarMenu()">Servicios</a>
+  <a href="blog.html" onclick="cerrarMenu()">Blog</a>
+  <a href="#nosotros" onclick="cerrarMenu()">Nosotros</a>
+  <a href="#contacto" class="nav-mobile-cta" onclick="cerrarMenu()">Consultar →</a>
+</div>
+
+<!-- HERO con slider -->
+<section class="hero" aria-label="Inicio">
+  <div class="hero-slides" id="heroSlides" aria-hidden="true">
+    <div class="hero-slide activo" style="background-image:url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&auto=format&fit=crop&q=80')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1600&auto=format&fit=crop&q=80')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1600&auto=format&fit=crop&q=80')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1600&auto=format&fit=crop&q=80')"></div>
+  </div>
+  <div class="hero-dots" id="heroDots" role="tablist" aria-label="Diapositivas del hero"></div>
+
+  <div class="hero-eyebrow-wrap">
+    <div class="hero-reveal"><div class="hero-reveal-inner"><p class="hero-eyebrow">Inmobiliaria de confianza · Desde 2004</p></div></div>
+  </div>
+
+  <div class="hero-reveal" style="margin-bottom:0">
+    <div class="hero-reveal-inner" style="transition-delay:.12s">
+      <h1>Tu próximo hogar<br><em>te está esperando.</em></h1>
+    </div>
+  </div>
+
+  <div class="hero-sub-wrap">
+    <div class="hero-reveal"><div class="hero-reveal-inner" style="transition-delay:.22s"><p class="hero-sub">Más de 20 años conectando familias con las mejores propiedades. Venta, alquiler y asesoramiento en todo el país.</p></div></div>
+  </div>
+
+  <div class="hero-reveal"><div class="hero-reveal-inner" style="transition-delay:.32s">
+    <div class="hero-search" role="search">
+      <div class="search-group">
+        <span class="search-label">Operación</span>
+        <select id="f-operacion"><option value="">Todas</option><option value="venta">Comprar</option><option value="alquiler">Alquilar</option></select>
+      </div>
+      <div class="search-group">
+        <span class="search-label">Tipo</span>
+        <select id="f-tipo"><option value="">Todos</option><option value="departamento">Departamento</option><option value="casa">Casa</option><option value="ph">PH</option><option value="local">Local</option></select>
+      </div>
+      <div class="search-group">
+        <span class="search-label">Zona</span>
+        <input type="text" id="f-zona" placeholder="Ej: Palermo, Belgrano…">
+      </div>
+      <button class="hero-search-btn" onclick="filtrar()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Buscar
+      </button>
+    </div>
+  </div></div>
+</section>
+
+<!-- CALCULADORA HIPOTECARIA -->
+<div class="calc-section" id="calc-section">
+  <p class="calc-titulo">🏦 Calculadora de cuota hipotecaria</p>
+  <div class="calc-row">
+    <div class="calc-group">
+      <label for="calc-precio">Precio del inmueble</label>
+      <input type="number" id="calc-precio" placeholder="USD 150.000" min="0">
+    </div>
+    <div class="calc-group">
+      <label for="calc-entrada">Entrada (%)</label>
+      <input type="number" id="calc-entrada" value="20" min="0" max="100">
+    </div>
+    <div class="calc-group">
+      <label for="calc-plazo">Plazo (años)</label>
+      <select id="calc-plazo">
+        <option value="10">10 años</option>
+        <option value="15">15 años</option>
+        <option value="20" selected>20 años</option>
+        <option value="30">30 años</option>
+      </select>
+    </div>
+    <button class="calc-btn" onclick="calcularCuota()">Calcular →</button>
+  </div>
+  <div class="calc-resultado" id="calc-resultado">
+    <div class="calc-dato"><span class="calc-dato-val" id="cr-cuota">—</span><span class="calc-dato-lbl">Cuota mensual (USD)</span></div>
+    <div class="calc-dato"><span class="calc-dato-val" id="cr-prestamo">—</span><span class="calc-dato-lbl">Monto del préstamo</span></div>
+    <div class="calc-dato"><span class="calc-dato-val" id="cr-total">—</span><span class="calc-dato-lbl">Total a pagar</span></div>
+    <div class="calc-dato"><span class="calc-dato-val" id="cr-interes">—</span><span class="calc-dato-lbl">Total en intereses</span></div>
+    <p style="font-size:11px;color:var(--gris);align-self:center">* Estimación referencial al 8% anual. Consultá con tu banco.</p>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar" aria-label="Datos de Altamira">
+  <div class="stat-item"><span class="stat-num" data-target="1200">0</span><span class="stat-label">Propiedades activas</span></div>
+  <div class="stat-sep"></div>
+  <div class="stat-item"><span class="stat-num">20 años</span><span class="stat-label">En el mercado</span></div>
+  <div class="stat-sep"></div>
+  <div class="stat-item"><span class="stat-num" data-target="4800">0</span><span class="stat-label">Operaciones cerradas</span></div>
+  <div class="stat-sep"></div>
+  <div class="stat-item"><span class="stat-num" data-target="98" data-suffix="%">0</span><span class="stat-label">Clientes satisfechos</span></div>
+</div>
+
+<!-- FILTROS -->
+<div class="filtros-bar" id="filtros-bar">
+  <button class="filtro-btn activo" onclick="filtroRapido(this,'','')">Todos</button>
+  <div class="filtro-sep"></div>
+  <button class="filtro-btn" onclick="filtroRapido(this,'venta','')">En venta</button>
+  <button class="filtro-btn" onclick="filtroRapido(this,'alquiler','')">En alquiler</button>
+  <div class="filtro-sep"></div>
+  <button class="filtro-btn" onclick="filtroRapido(this,'','casa')">Casas</button>
+  <button class="filtro-btn" onclick="filtroRapido(this,'','departamento')">Departamentos</button>
+  <button class="filtro-btn" onclick="filtroRapido(this,'','ph')">PH</button>
+  <button class="filtro-btn" onclick="filtroRapido(this,'','local')">Locales</button>
+  <div class="filtros-derecha">
+    <span class="filtros-resultado" id="filtros-resultado" aria-live="polite"></span>
+    <select class="ordenar-select" id="ordenar" onchange="ordenarCards()">
+      <option value="">Ordenar por…</option>
+      <option value="asc">Precio: menor a mayor</option>
+      <option value="desc">Precio: mayor a menor</option>
+    </select>
+  </div>
+</div>
+<hr class="divider">
+
+<!-- PROPIEDADES -->
+<section class="section" id="propiedades">
+  <div class="section-header">
+    <div><p class="section-eyebrow">Propiedades destacadas</p><h2 class="section-title">Encontrá el espacio que buscás</h2></div>
+    <a href="#" class="ver-todos">Ver todas las propiedades →</a>
+  </div>
+  <div class="props-grid" id="props-grid">
+    <div class="prop-skeleton grande fade-up" id="skel-1" style="grid-column:span 2"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line w40"></div><div class="skeleton-line w80"></div><div class="skeleton-line w60"></div></div></div>
+    <div class="prop-skeleton fade-up" id="skel-2"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line w40"></div><div class="skeleton-line w80"></div><div class="skeleton-line w60"></div></div></div>
+    <div class="prop-skeleton fade-up" id="skel-3"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line w40"></div><div class="skeleton-line w80"></div><div class="skeleton-line w60"></div></div></div>
+    <div class="prop-skeleton fade-up" id="skel-4"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line w40"></div><div class="skeleton-line w80"></div><div class="skeleton-line w60"></div></div></div>
+    <div class="prop-skeleton fade-up" id="skel-5"><div class="skeleton-img"></div><div class="skeleton-body"><div class="skeleton-line w40"></div><div class="skeleton-line w80"></div><div class="skeleton-line w60"></div></div></div>
+    <div class="props-empty" id="props-empty"><p style="font-size:2rem">🔍</p><p><strong>Sin resultados</strong></p><p>Probá con otros filtros o <a href="#contacto" style="color:var(--dorado)">consultanos</a>.</p></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ZONAS -->
+<section class="section" id="zonas">
+  <div class="section-header">
+    <div><p class="section-eyebrow">Explorá por zona</p><h2 class="section-title">¿Dónde querés vivir?</h2></div>
+  </div>
+  <div class="zonas-grid">
+    <button class="zona-card fade-up" onclick="filtroZona('palermo')" aria-label="Ver propiedades en Palermo">
+      <img src="https://images.unsplash.com/photo-1589519160732-57fc498494f8?w=600&auto=format&fit=crop&q=80" alt="Palermo" loading="lazy">
+      <div class="zona-card-overlay"><p class="zona-nombre">Palermo</p><p class="zona-count">3 propiedades</p></div>
+    </button>
+    <button class="zona-card fade-up" onclick="filtroZona('recoleta')" aria-label="Ver propiedades en Recoleta">
+      <img src="https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=600&auto=format&fit=crop&q=80" alt="Recoleta" loading="lazy">
+      <div class="zona-card-overlay"><p class="zona-nombre">Recoleta</p><p class="zona-count">2 propiedades</p></div>
+    </button>
+    <button class="zona-card fade-up" onclick="filtroZona('belgrano')" aria-label="Ver propiedades en Belgrano">
+      <img src="https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=600&auto=format&fit=crop&q=80" alt="Belgrano" loading="lazy">
+      <div class="zona-card-overlay"><p class="zona-nombre">Belgrano</p><p class="zona-count">2 propiedades</p></div>
+    </button>
+    <button class="zona-card fade-up" onclick="filtroZona('nordelta')" aria-label="Ver propiedades en Nordelta">
+      <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?w=600&auto=format&fit=crop&q=80" alt="Nordelta" loading="lazy">
+      <div class="zona-card-overlay"><p class="zona-nombre">Nordelta</p><p class="zona-count">1 propiedad</p></div>
+    </button>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- TESTIMONIOS -->
+<section class="section" id="testimonios" style="background:var(--fondo2)">
+  <div class="section-header"><div><p class="section-eyebrow">Testimonios</p><h2 class="section-title">Lo que dicen nuestros clientes</h2></div></div>
+  <div class="testimonios-grid">
+    <div class="testi-card fade-up"><div class="testi-stars">★★★★★</div><p class="testi-texto">"Excelente atención de principio a fin. Vendimos nuestro departamento en menos de 3 semanas y al precio que esperábamos."</p><div class="testi-autor"><div class="testi-avatar">👩</div><div><p class="testi-nombre">Valeria Moreno</p><p class="testi-lugar">Vendedora · Palermo, CABA</p></div></div></div>
+    <div class="testi-card fade-up"><div class="testi-stars">★★★★★</div><p class="testi-texto">"El equipo de Altamira entendió exactamente lo que buscábamos. En dos meses teníamos las llaves de nuestra casa en Nordelta."</p><div class="testi-autor"><div class="testi-avatar">👨</div><div><p class="testi-nombre">Martín y Lucía Fernández</p><p class="testi-lugar">Compradores · Nordelta, Tigre</p></div></div></div>
+    <div class="testi-card fade-up"><div class="testi-stars">★★★★★</div><p class="testi-texto">"Tercera vez que trabajamos con Altamira. Les confiamos la administración de dos propiedades y nunca tuvimos un problema."</p><div class="testi-autor"><div class="testi-avatar">👩</div><div><p class="testi-nombre">Carolina Vidal</p><p class="testi-lugar">Inversora · Recoleta, CABA</p></div></div></div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section class="section" id="servicios">
+  <div class="section-header"><div><p class="section-eyebrow">Nuestros servicios</p><h2 class="section-title">Todo lo que necesitás en un solo lugar</h2></div></div>
+  <div class="servicios-grid">
+    <div class="serv-card fade-up"><span class="serv-icono">🏠</span><h3>Compra y venta</h3><p>Asesoramiento integral en cada etapa. Encontramos el comprador ideal o la propiedad perfecta para vos.</p></div>
+    <div class="serv-card fade-up"><span class="serv-icono">📋</span><h3>Alquileres</h3><p>Gestión completa: selección de inquilinos, contratos, garantías y seguimiento durante toda la locación.</p></div>
+    <div class="serv-card fade-up"><span class="serv-icono">📊</span><h3>Tasaciones</h3><p>Valuaciones precisas basadas en datos reales del mercado. Sin costo, sin compromiso.</p></div>
+    <div class="serv-card fade-up"><span class="serv-icono">⚖️</span><h3>Asesoría legal</h3><p>Acompañamiento jurídico en escrituras, boletos y contratos. Operaciones seguras de principio a fin.</p></div>
+  </div>
+</section>
+
+<!-- TASACIÓN -->
+<section class="tasacion-section" id="tasacion">
+  <div class="tasacion-deco"></div>
+  <div>
+    <p class="tasacion-eyebrow">Tasación gratuita</p>
+    <h2>¿Cuánto vale <em>tu propiedad</em>?</h2>
+    <p style="margin-top:1rem;font-size:15px;color:rgba(250,250,248,0.6);font-weight:300;line-height:1.8;max-width:380px">Nuestros tasadores certificados analizan tu inmueble y te entregan una valuación profesional sin costo. Resultados en 48 horas.</p>
+  </div>
+  <form class="tasacion-form" onsubmit="return false">
+    <div class="form-row">
+      <div class="form-group"><label for="t-nombre">Nombre</label><input type="text" id="t-nombre" placeholder="Tu nombre"></div>
+      <div class="form-group"><label for="t-tel">Teléfono</label><input type="tel" id="t-tel" placeholder="Tu WhatsApp"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label for="t-tipo">Tipo</label><select id="t-tipo"><option>Seleccioná</option><option>Departamento</option><option>Casa</option><option>PH</option><option>Local</option><option>Terreno</option></select></div>
+      <div class="form-group"><label for="t-zona">Zona</label><input type="text" id="t-zona" placeholder="Barrio o localidad"></div>
+    </div>
+    <button type="submit" class="form-submit">Solicitar tasación gratuita →</button>
+    <p style="font-size:11px;color:rgba(250,250,248,0.35);text-align:center">Sin costo · Sin compromiso · Respuesta en 48 hs</p>
+  </form>
+</section>
+
+<!-- NOSOTROS -->
+<section class="section" id="nosotros">
+  <div class="nosotros-grid">
+    <div class="fade-up">
+      <p class="section-eyebrow">Quiénes somos</p>
+      <h2 class="section-title">20 años construyendo confianza</h2>
+      <p style="margin-top:1.25rem;font-size:15px;color:var(--gris);font-weight:300;line-height:1.85;max-width:440px">Altamira Propiedades nació en 2004 con una convicción simple: cada operación inmobiliaria debe ser transparente, eficiente y justa. Hoy somos un equipo de 30 profesionales especializados en el mercado residencial y comercial argentino.</p>
+    </div>
+    <div class="nosotros-stats fade-up">
+      <div class="nos-stat light"><p class="nos-num-light">30</p><p class="nos-lbl-light">Profesionales</p></div>
+      <div class="nos-stat dark"><p class="nos-num-dark">4+</p><p class="nos-lbl-dark">Sucursales</p></div>
+      <div class="nos-stat tono"><p class="nos-num-light">98%</p><p class="nos-lbl-light">Satisfacción</p></div>
+      <div class="nos-stat light"><p class="nos-num-light">24hs</p><p class="nos-lbl-light">Respuesta</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="newsletter-section">
+  <div class="newsletter-inner">
+    <div class="newsletter-texto">
+      <h2>Recibí propiedades nuevas antes que nadie</h2>
+      <p>Suscribite y te avisamos apenas llegue una propiedad que coincida con lo que buscás.</p>
+    </div>
+    <form class="newsletter-form" onsubmit="submitNewsletter(event)">
+      <input type="email" class="newsletter-input" placeholder="Tu email" required>
+      <button type="submit" class="newsletter-btn">Suscribirme</button>
+    </form>
+    <div class="newsletter-ok" id="newsletter-ok">✅ ¡Listo! Te avisamos cuando haya novedades.</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- CONTACTO -->
+<section class="contacto-section" id="contacto">
+  <div class="fade-up">
+    <p class="section-eyebrow">Contacto</p>
+    <h2 class="contacto-titulo">Hablemos de tu próxima operación</h2>
+    <p class="contacto-sub">Nuestros asesores están disponibles para responder todas tus consultas. Sin presión, sin compromisos.</p>
+    <div class="contacto-links">
+      <a href="https://wa.me/5491100000000?text=Hola%2C%20me%20interesa%20una%20propiedad" class="contacto-link" target="_blank" rel="noopener"><div class="cl-icon">💬</div><div class="cl-texto"><span class="cl-label">WhatsApp</span><span class="cl-val">Respuesta en minutos</span></div><span class="cl-arrow">→</span></a>
+      <a href="mailto:info@altamirapropiedades.com.ar" class="contacto-link"><div class="cl-icon">✉️</div><div class="cl-texto"><span class="cl-label">Email</span><span class="cl-val">info@altamirapropiedades.com.ar</span></div><span class="cl-arrow">→</span></a>
+      <a href="tel:+541148000000" class="contacto-link"><div class="cl-icon">📞</div><div class="cl-texto"><span class="cl-label">Teléfono</span><span class="cl-val">+54 11 4800-0000</span></div><span class="cl-arrow">→</span></a>
+      <a href="https://maps.google.com" class="contacto-link" target="_blank" rel="noopener"><div class="cl-icon">📍</div><div class="cl-texto"><span class="cl-label">Oficina central</span><span class="cl-val">Av. Libertador 1234, Piso 8 · CABA</span></div><span class="cl-arrow">→</span></a>
+    </div>
+  </div>
+  <div class="contacto-form-box fade-up">
+    <p class="contacto-form-titulo">Dejanos tu consulta</p>
+    <form class="contacto-form" onsubmit="return false">
+      <div class="cf-row">
+        <div class="cf-group"><label>Nombre</label><input type="text" placeholder="Tu nombre"></div>
+        <div class="cf-group"><label>Teléfono</label><input type="tel" placeholder="WhatsApp"></div>
+      </div>
+      <div class="cf-group"><label>¿En qué te podemos ayudar?</label><select><option value="">Seleccioná</option><option>Quiero comprar</option><option>Quiero vender</option><option>Quiero alquilar</option><option>Solicitar tasación</option><option>Otro</option></select></div>
+      <div class="cf-group"><label>Mensaje (opcional)</label><textarea rows="3" placeholder="Contanos más sobre lo que buscás…"></textarea></div>
+      <button type="submit" class="cf-submit">Enviar consulta →</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <a href="inmobiliaria.html" class="footer-logo">Altamira Propiedades</a>
+  <p>© 2025 Altamira Propiedades · Matrícula CUCICBA 7821</p>
+  <ul class="footer-links">
+    <li><a href="#">Privacidad</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="admin.html">Admin</a></li>
+  </ul>
+</footer>
+
+<!-- FULLSCREEN -->
+<div class="fullscreen-overlay" id="fsOverlay" aria-hidden="true">
+  <img src="" alt="" id="fsImg">
+  <button class="fullscreen-close" id="fsClose">✕</button>
+  <button class="fullscreen-btn prev" id="fsPrev">‹</button>
+  <button class="fullscreen-btn next" id="fsNext">›</button>
+  <span class="fullscreen-counter" id="fsCounter"></span>
+</div>
+
+<!-- MODAL PROPIEDAD -->
+<div class="modal-overlay" id="modalOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+  <div class="modal-box">
+    <div class="modal-galeria" id="modalGaleria">
+      <div class="modal-galeria-track" id="modalTrack"></div>
+      <button class="modal-galeria-btn prev" id="modalPrev">‹</button>
+      <button class="modal-galeria-btn next" id="modalNext">›</button>
+      <span class="modal-galeria-counter" id="modalCounter"></span>
+      <div class="modal-miniaturas" id="modalMiniaturas"></div>
+      <button class="modal-close" id="modalClose">✕</button>
+    </div>
+    <div class="modal-contenido">
+      <div>
+        <p class="modal-badge-tipo" id="modalBadge"></p>
+        <h2 class="modal-titulo" id="modalTitulo"></h2>
+        <p class="modal-ubicacion"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span id="modalZona"></span></p>
+        <div class="modal-atributos-row" id="modalAtributos"></div>
+        <p class="modal-desc-titulo">Descripción</p>
+        <p class="modal-desc" id="modalDesc"></p>
+        <p class="modal-desc-titulo">Amenities</p>
+        <div class="modal-amenities" id="modalAmenities"></div>
+        <p class="modal-desc-titulo" style="margin-bottom:.75rem">Ubicación</p>
+        <div class="modal-mapa-wrap"><iframe id="modalMapa" loading="lazy" title="Mapa"></iframe></div>
+        <p class="modal-form-titulo">Consultar por esta propiedad</p>
+        <form class="modal-form" onsubmit="return false">
+          <input type="text" placeholder="Tu nombre" id="mf-nombre">
+          <input type="tel" placeholder="Tu WhatsApp" id="mf-tel">
+          <textarea rows="2" placeholder="¿Qué querés saber?" id="mf-msg"></textarea>
+          <button type="submit" class="modal-form-submit" id="mf-submit">Enviar consulta →</button>
+        </form>
+        <!-- SIMILARES -->
+        <div class="modal-similares" id="modalSimilares">
+          <p class="modal-similares-titulo">Propiedades similares</p>
+          <div class="similares-grid" id="similaresGrid"></div>
+        </div>
+      </div>
+      <div class="modal-panel">
+        <div class="modal-precio-box">
+          <p class="modal-precio-lbl" id="modalPrecioLbl"></p>
+          <p class="modal-precio-val" id="modalPrecioVal"></p>
+          <p class="modal-precio-sub" id="modalPrecioSub"></p>
+        </div>
+        <a class="modal-wa-btn" id="modalWaBtn" href="#" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Consultar por WhatsApp
+        </a>
+        <a class="modal-tel-btn" href="tel:+541148000000">📞 Llamar ahora</a>
+        <button class="modal-compartir" id="modalCompartir">🔗 Copiar enlace</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══ DATA ══ */
+const PROPS = {
+  1:{titulo:'Casa con pileta en Nordelta',tipo:'Casa · Venta',op:'venta',tipoCat:'casa',zona:'nordelta tigre',zonaDisplay:'Nordelta, Tigre',precio:'USD 485.000',precioNum:485000,precioLbl:'Precio de venta',precioSub:'Dólares billete',desc:'Amplia residencia moderna con jardín privado de 600 m², pileta climatizada con deck de madera y espacios de doble altura. Cocina integrada premium. Garaje para 2 vehículos. Barrio cerrado con seguridad 24hs.',attrs:[{i:'🛏',v:'4',l:'Dormitorios'},{i:'🚿',v:'3',l:'Baños'},{i:'📐',v:'320 m²',l:'Total'},{i:'🌿',v:'600 m²',l:'Jardín'},{i:'🚗',v:'2',l:'Cocheras'}],amenities:['Pileta climatizada','Jardín privado','Seguridad 24hs','Quincho','Luminoso'],mapaQ:'Nordelta, Tigre, Buenos Aires',nuevo:true,reducido:false,fotos:['https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1200&auto=format&fit=crop&q=85','https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=1200&auto=format&fit=crop&q=85','https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&auto=format&fit=crop&q=85','https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1200&auto=format&fit=crop&q=85','https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=1200&auto=format&fit=crop&q=85','https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1200&auto=format&fit=crop&q=85'],waMsg:'Hola, me interesa la Casa en Nordelta (USD 485.000). ¿Podemos coordinar una visita?'},
+  2:{titulo:'2 ambientes con balcón en Palermo',tipo:'Departamento · Venta',op:'venta',tipoCat:'departamento',zona:'palermo caba',zonaDisplay:'Palermo, CABA',precio:'USD 128.000',precioNum:128000,precioLbl:'Precio de venta',precioSub:'Dólares billete',desc:'Moderno departamento en el corazón de Palermo. Balcón corrido al frente, cocina americana con mesada de cuarzo. Edificio con amenities. A metros del Parque Las Heras.',attrs:[{i:'🛏',v:'1',l:'Dormitorio'},{i:'🚿',v:'1',l:'Baño'},{i:'📐',v:'58 m²',l:'Total'},{i:'🏢',v:'3°',l:'Piso'}],amenities:['Balcón','Amenities','Lavadero','SUM','Expensas bajas'],mapaQ:'Palermo, Buenos Aires',nuevo:false,reducido:false,fotos:['https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&auto=format&fit=crop&q=85','https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&auto=format&fit=crop&q=85','https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&auto=format&fit=crop&q=85','https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&auto=format&fit=crop&q=85','https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=1200&auto=format&fit=crop&q=85'],waMsg:'Hola, me interesa el depto 2 ambientes en Palermo (USD 128.000). ¿Podemos coordinar una visita?'},
+  3:{titulo:'PH con terraza propia en Belgrano',tipo:'PH · Alquiler',op:'alquiler',tipoCat:'ph',zona:'belgrano caba',zonaDisplay:'Belgrano, CABA',precio:'$950.000/mes',precioNum:950000,precioLbl:'Alquiler mensual',precioSub:'Más expensas. Ajuste anual.',desc:'PH de 3 dormitorios con terraza exclusiva de 60 m². Doble altura, cocina equipada. Belgrano R, a 5 cuadras del subte D.',attrs:[{i:'🛏',v:'3',l:'Dormitorios'},{i:'🚿',v:'2',l:'Baños'},{i:'📐',v:'145 m²',l:'Total'},{i:'🌿',v:'60 m²',l:'Terraza'}],amenities:['Terraza exclusiva','Jardín','Doble altura','Cerca del subte','Luminoso'],mapaQ:'Belgrano, Buenos Aires',nuevo:false,reducido:true,fotos:['https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&auto=format&fit=crop&q=85','https://images.unsplash.com/photo-1505873242700-f289a29e1e0f?w=1200&auto=format&fit=crop&q=85','https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&auto=format&fit=crop&q=85','https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=1200&auto=format&fit=crop&q=85','https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=1200&auto=format&fit=crop&q=85','https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&auto=format&fit=crop&q=85','https://images.unsplash.com/photo-1571508601891-ca5e7a713859?w=1200&auto=format&fit=crop&q=85'],waMsg:'Hola, me interesa el PH en Belgrano ($950.000/mes). ¿Podemos coordinar una visita?'},
+  4:{titulo:'3 ambientes con vista al parque — Recoleta',tipo:'Departamento · Venta',op:'venta',tipoCat:'departamento',zona:'recoleta caba',zonaDisplay:'Recoleta, CABA',precio:'USD 210.000',precioNum:210000,precioLbl:'Precio de venta',precioSub:'Dólares billete',desc:'Elegante departamento en Recoleta. Vista directa al Parque Thays. Techos altos, parquet, detalles de época. Totalmente reciclado. Portería 24hs.',attrs:[{i:'🛏',v:'2',l:'Dormitorios'},{i:'🚿',v:'2',l:'Baños'},{i:'📐',v:'95 m²',l:'Total'},{i:'🏛',v:'Clásico',l:'Estilo'}],amenities:['Vista al parque','Portería 24hs','Techos altos','Parquet','Reciclado'],mapaQ:'Recoleta, Buenos Aires',nuevo:false,reducido:false,fotos:['https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=1200&auto=format&fit=crop&q=85','https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=1200&auto=format&fit=crop&q=85','https://images.unsplash.com/photo-1565182999561-18d7dc61c393?w=1200&auto=format&fit=crop&q=85','https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&auto=format&fit=crop&q=85'],waMsg:'Hola, me interesa el dpto 3 ambientes en Recoleta (USD 210.000).'},
+  5:{titulo:'Local comercial — San Telmo',tipo:'Local comercial · Alquiler',op:'alquiler',tipoCat:'local',zona:'san telmo caba',zonaDisplay:'San Telmo, CABA',precio:'$680.000/mes',precioNum:680000,precioLbl:'Alquiler mensual',precioSub:'Más expensas. Ajuste semestral.',desc:'Local a estrenar sobre calle Defensa. 80 m² cubiertos + 20 m² de patio. Frente 6 m, vidriera panorámica. Instalación trifásica, campana extractora incluida. Alto tráfico peatonal.',attrs:[{i:'📐',v:'80 m²',l:'Cubierto'},{i:'🌿',v:'20 m²',l:'Patio'},{i:'🚪',v:'6 m',l:'Frente'},{i:'⚡',v:'Trifásico',l:'Electricidad'}],amenities:['A estrenar','Campana extractora','Cámara frigorífica','Alto tráfico','Patio'],mapaQ:'San Telmo, Buenos Aires',nuevo:true,reducido:false,fotos:['https://images.unsplash.com/photo-1604014237800-1c9102c219da?w=1200&auto=format&fit=crop&q=85','https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&auto=format&fit=crop&q=85','https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&auto=format&fit=crop&q=85','https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=1200&auto=format&fit=crop&q=85'],waMsg:'Hola, me interesa el local en San Telmo ($680.000/mes).'}
+};
+
+/* ══ HERO SLIDER ══ */
+const slides = document.querySelectorAll('.hero-slide');
+const dotsC  = document.getElementById('heroDots');
+let slideIdx = 0, slideTimer;
+slides.forEach((_, i) => {
+  const b = document.createElement('button');
+  b.className = 'hero-dot' + (i===0?' activo':'');
+  b.setAttribute('aria-label',`Diapositiva ${i+1}`);
+  b.addEventListener('click', () => goSlide(i));
+  dotsC.appendChild(b);
+});
+function goSlide(n) {
+  slides[slideIdx].classList.remove('activo');
+  dotsC.children[slideIdx].classList.remove('activo');
+  slideIdx = (n + slides.length) % slides.length;
+  slides[slideIdx].classList.add('activo');
+  dotsC.children[slideIdx].classList.add('activo');
+}
+function nextSlide() { goSlide(slideIdx + 1); }
+slideTimer = setInterval(nextSlide, 5000);
+document.querySelector('.hero').addEventListener('mouseenter', () => clearInterval(slideTimer));
+document.querySelector('.hero').addEventListener('mouseleave', () => { slideTimer = setInterval(nextSlide, 5000); });
+
+/* ══ HERO REVEAL ══ */
+window.addEventListener('load', () => {
+  setTimeout(() => document.querySelectorAll('.hero-reveal').forEach(el => el.classList.add('visible')), 100);
+});
+
+/* ══ CALCULADORA ══ */
+function calcularCuota() {
+  const precio  = parseFloat(document.getElementById('calc-precio').value);
+  const entrada = parseFloat(document.getElementById('calc-entrada').value) / 100;
+  const anios   = parseInt(document.getElementById('calc-plazo').value);
+  if (!precio || isNaN(precio) || precio <= 0) { alert('Ingresá un precio válido'); return; }
+  const prestamo = precio * (1 - entrada);
+  const tasa     = 0.08 / 12;
+  const cuotas   = anios * 12;
+  const cuota    = prestamo * (tasa * Math.pow(1+tasa, cuotas)) / (Math.pow(1+tasa, cuotas) - 1);
+  const total    = cuota * cuotas;
+  const interes  = total - prestamo;
+  const fmt = n => 'USD ' + Math.round(n).toLocaleString('es-AR');
+  document.getElementById('cr-cuota').textContent    = fmt(cuota);
+  document.getElementById('cr-prestamo').textContent = fmt(prestamo);
+  document.getElementById('cr-total').textContent    = fmt(total);
+  document.getElementById('cr-interes').textContent  = fmt(interes);
+  document.getElementById('calc-resultado').classList.add('visible');
+}
+
+/* ══ RENDER CARDS ══ */
+function renderCards() {
+  document.querySelectorAll('[id^="skel-"]').forEach(s => s.remove());
+  const grid = document.getElementById('props-grid');
+  Object.entries(PROPS).forEach(([id, p], idx) => {
+    const grande = id === '1';
+    const art = document.createElement('article');
+    art.className = 'prop-card fade-up' + (grande ? ' grande' : '');
+    art.dataset.id = id; art.dataset.op = p.op; art.dataset.tipo = p.tipoCat;
+    art.dataset.zona = p.zona; art.dataset.precio = p.precioNum;
+    art.tabIndex = 0; art.setAttribute('role','button');
+    const pDisplay = p.precio.includes('/mes')
+      ? p.precio.replace('/mes',`<span style="font-size:13px;font-weight:400;color:var(--gris)">/mes</span>`)
+      : p.precio;
+    const descCorta = grande ? `<p style="font-size:14px;color:var(--gris);line-height:1.7;margin-bottom:1rem">${p.desc.slice(0,140)}…</p>` : '';
+    art.innerHTML = `
+      <div class="prop-img">
+        <img src="${p.fotos[0]}" alt="${p.titulo}" loading="${idx<2?'eager':'lazy'}">
+        <span class="prop-badge-extra">
+          ${p.nuevo?'<span class="badge-extra nuevo">Nuevo</span>':''}
+          ${p.reducido?'<span class="badge-extra reducido">Precio reducido</span>':''}
+          <span class="badge-extra op ${p.op==='alquiler'?'alq':''}">${p.op==='venta'?'Venta':'Alquiler'}</span>
+        </span>
+        <button class="prop-fav" onclick="event.stopPropagation()">♡</button>
+        <span class="prop-img-count">📷 ${p.fotos.length} foto${p.fotos.length>1?'s':''}</span>
+      </div>
+      <div class="prop-body">
+        <p class="prop-tipo">${p.tipo}</p>
+        <p class="prop-precio">${pDisplay}</p>
+        <p class="prop-nombre">${p.titulo}</p>
+        <p class="prop-zona"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${p.zonaDisplay}</p>
+        ${descCorta}
+        <div class="prop-atributos">${p.attrs.slice(0,grande?4:3).map(a=>`<span class="prop-attr">${a.i} ${a.v}</span>`).join('')}</div>
+        <button class="prop-ver-btn" onclick="event.stopPropagation();abrirModal(${id})">Ver propiedad →</button>
+      </div>`;
+    art.addEventListener('click', e => { if(!e.target.closest('.prop-fav')&&!e.target.closest('.prop-ver-btn')) abrirModal(parseInt(id)); });
+    art.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){e.preventDefault();abrirModal(parseInt(id));} });
+    grid.insertBefore(art, document.getElementById('props-empty'));
+  });
+  document.querySelectorAll('.prop-fav').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const on = btn.textContent.trim()==='♥';
+      btn.textContent = on?'♡':'♥'; btn.style.color = on?'':'#e53e3e';
+    });
+  });
+  document.querySelectorAll('.prop-card.fade-up').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';fadeObs.observe(el);});
+  aplicarFiltro('','','');
+}
+
+/* ══ MODAL ══ */
+let fotoActual=0, fotosActuales=[], scrollY=0, ultimoFoco=null;
+function abrirModal(id) {
+  const p = PROPS[id]; if(!p) return;
+  document.getElementById('modalBadge').textContent  = p.tipo;
+  document.getElementById('modalTitulo').textContent = p.titulo;
+  document.getElementById('modalZona').textContent   = p.zonaDisplay;
+  document.getElementById('modalDesc').textContent   = p.desc;
+  document.getElementById('modalPrecioLbl').textContent = p.precioLbl;
+  document.getElementById('modalPrecioVal').textContent = p.precio;
+  document.getElementById('modalPrecioSub').textContent = p.precioSub;
+  document.getElementById('modalAtributos').innerHTML = p.attrs.map(a=>`<div class="modal-attr"><span class="modal-attr-icon">${a.i}</span><span class="modal-attr-val">${a.v}</span><span class="modal-attr-lbl">${a.l}</span></div>`).join('');
+  document.getElementById('modalAmenities').innerHTML = p.amenities.map(a=>`<span class="amenity-tag">✓ ${a}</span>`).join('');
+  const tel='5491100000000';
+  document.getElementById('modalWaBtn').href=`https://wa.me/${tel}?text=${encodeURIComponent(p.waMsg)}`;
+  document.getElementById('modalMapa').src=`https://www.google.com/maps/embed/v1/place?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&q=${encodeURIComponent(p.mapaQ)}&zoom=14`;
+  document.getElementById('mf-submit').onclick = () => {
+    const n=document.getElementById('mf-nombre').value.trim()||'un interesado';
+    const m=document.getElementById('mf-msg').value.trim();
+    window.open(`https://wa.me/${tel}?text=${encodeURIComponent(`Hola, soy ${n}. Me interesa: "${p.titulo}". ${m}`)}`, '_blank');
+  };
+  // similares
+  const sims = Object.entries(PROPS).filter(([sid,sp]) => sid!=id && (sp.tipoCat===p.tipoCat || sp.op===p.op)).slice(0,3);
+  document.getElementById('similaresGrid').innerHTML = sims.map(([sid,sp])=>`
+    <div class="similar-card" onclick="cerrarModal();setTimeout(()=>abrirModal(${sid}),350)" tabindex="0">
+      <img class="similar-img" src="${sp.fotos[0]}" alt="${sp.titulo}" loading="lazy">
+      <div class="similar-body"><p class="similar-precio">${sp.precio}</p><p class="similar-nombre">${sp.titulo}</p></div>
+    </div>`).join('');
+  fotosActuales=p.fotos; fotoActual=0; renderGaleria();
+  document.getElementById('modalCompartir').onclick=()=>{
+    navigator.clipboard.writeText(location.href+'#prop-'+id).then(()=>{
+      const b=document.getElementById('modalCompartir'); const o=b.textContent;
+      b.textContent='✓ Enlace copiado'; setTimeout(()=>b.textContent=o,2000);
+    }).catch(()=>{});
+  };
+  const ov=document.getElementById('modalOverlay');
+  ov.removeAttribute('aria-hidden'); ov.classList.add('abierto');
+  scrollY=window.scrollY;
+  document.body.style.cssText=`overflow:hidden;position:fixed;top:-${scrollY}px;width:100%`;
+  ultimoFoco=document.activeElement;
+  ov.querySelector('.modal-contenido').scrollTop=0;
+  document.getElementById('modalClose').focus();
+}
+function cerrarModal() {
+  const ov=document.getElementById('modalOverlay');
+  ov.classList.remove('abierto'); ov.setAttribute('aria-hidden','true');
+  document.body.style.cssText=''; window.scrollTo(0,scrollY);
+  if(ultimoFoco) ultimoFoco.focus();
+}
+function renderGaleria() {
+  const track=document.getElementById('modalTrack');
+  track.innerHTML=fotosActuales.map((src,i)=>`<img src="${src}" alt="Foto ${i+1}" loading="${i===0?'eager':'lazy'}" style="cursor:zoom-in" onclick="abrirFS(${i})">`).join('');
+  track.style.transform='translateX(0)';
+  document.getElementById('modalMiniaturas').innerHTML=fotosActuales.map((src,i)=>`<button class="modal-miniatura${i===0?' activa':''}" onclick="irFoto(${i})"><img src="${src}" alt=""></button>`).join('');
+  updCounter();
+}
+function irFoto(idx) {
+  fotoActual=Math.max(0,Math.min(idx,fotosActuales.length-1));
+  document.getElementById('modalTrack').style.transform=`translateX(-${fotoActual*100}%)`;
+  document.querySelectorAll('.modal-miniatura').forEach((m,i)=>m.classList.toggle('activa',i===fotoActual));
+  updCounter();
+}
+function updCounter(){document.getElementById('modalCounter').textContent=`${fotoActual+1} / ${fotosActuales.length}`;}
+document.getElementById('modalPrev').onclick=()=>irFoto(fotoActual-1);
+document.getElementById('modalNext').onclick=()=>irFoto(fotoActual+1);
+document.getElementById('modalClose').onclick=cerrarModal;
+document.getElementById('modalOverlay').onclick=e=>{if(e.target===document.getElementById('modalOverlay'))cerrarModal();};
+(()=>{const g=document.getElementById('modalGaleria');let sx=0;
+  g.addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
+  g.addEventListener('touchend',e=>{const d=sx-e.changedTouches[0].clientX;if(Math.abs(d)>50)irFoto(d>0?fotoActual+1:fotoActual-1);},{passive:true});
+})();
+
+/* ══ FULLSCREEN ══ */
+let fsIdx=0,fsFotos=[];
+function abrirFS(idx){fsFotos=fotosActuales;fsIdx=idx;const fs=document.getElementById('fsOverlay');document.getElementById('fsImg').src=fsFotos[fsIdx];document.getElementById('fsCounter').textContent=`${fsIdx+1} / ${fsFotos.length}`;fs.removeAttribute('aria-hidden');fs.classList.add('abierto');document.getElementById('fsClose').focus();}
+function cerrarFS(){const fs=document.getElementById('fsOverlay');fs.classList.remove('abierto');fs.setAttribute('aria-hidden','true');}
+function irFS(d){fsIdx=Math.max(0,Math.min(fsIdx+d,fsFotos.length-1));document.getElementById('fsImg').src=fsFotos[fsIdx];document.getElementById('fsCounter').textContent=`${fsIdx+1} / ${fsFotos.length}`;}
+document.getElementById('fsClose').onclick=cerrarFS;
+document.getElementById('fsPrev').onclick=()=>irFS(-1);
+document.getElementById('fsNext').onclick=()=>irFS(1);
+document.getElementById('fsOverlay').onclick=e=>{if(e.target===document.getElementById('fsOverlay'))cerrarFS();};
+
+/* ══ FILTROS ══ */
+function filtrar(){const op=document.getElementById('f-operacion').value,tipo=document.getElementById('f-tipo').value,zona=document.getElementById('f-zona').value.toLowerCase().trim();document.querySelectorAll('.filtro-btn').forEach(b=>b.classList.remove('activo'));document.querySelector('.filtro-btn').classList.add('activo');aplicarFiltro(op,tipo,zona);}
+function filtroRapido(btn,op,tipo){document.querySelectorAll('.filtro-btn').forEach(b=>b.classList.remove('activo'));btn.classList.add('activo');document.getElementById('f-operacion').value=op;document.getElementById('f-tipo').value=tipo;document.getElementById('f-zona').value='';aplicarFiltro(op,tipo,'');}
+function filtroZona(z){document.getElementById('f-zona').value=z;filtrar();document.getElementById('propiedades').scrollIntoView({behavior:'smooth'});}
+function aplicarFiltro(op,tipo,zona){const cards=document.querySelectorAll('.prop-card[data-id]');let v=0;cards.forEach(c=>{const ok=(!op||c.dataset.op===op)&&(!tipo||c.dataset.tipo===tipo)&&(!zona||c.dataset.zona.includes(zona));c.style.display=ok?'':'none';if(ok)v++;});const g=document.querySelector('.prop-card.grande');if(g&&g.style.display!=='none')g.style.gridColumn='';document.getElementById('props-empty').classList.toggle('visible',v===0);document.getElementById('filtros-resultado').textContent=v>0?`${v} propiedad${v!==1?'es':''} encontrada${v!==1?'s':''}`:'';}
+function ordenarCards(){const dir=document.getElementById('ordenar').value;if(!dir)return;const grid=document.getElementById('props-grid');const cards=[...grid.querySelectorAll('.prop-card[data-id]')];cards.sort((a,b)=>dir==='asc'?a.dataset.precio-b.dataset.precio:b.dataset.precio-a.dataset.precio);const empty=document.getElementById('props-empty');cards.forEach(c=>grid.insertBefore(c,empty));}
+
+/* ══ TECLADO ══ */
+document.addEventListener('keydown',e=>{
+  const fs=document.getElementById('fsOverlay');
+  if(fs.classList.contains('abierto')){if(e.key==='Escape')cerrarFS();if(e.key==='ArrowLeft')irFS(-1);if(e.key==='ArrowRight')irFS(1);return;}
+  const ov=document.getElementById('modalOverlay');
+  if(!ov.classList.contains('abierto'))return;
+  if(e.key==='Escape')cerrarModal();
+  if(e.key==='ArrowLeft')irFoto(fotoActual-1);
+  if(e.key==='ArrowRight')irFoto(fotoActual+1);
+  if(e.key==='Tab'){const f=ov.querySelectorAll('button:not([disabled]),a[href],input,select,textarea');const first=f[0],last=f[f.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}
+});
+
+/* ══ DARK MODE ══ */
+(()=>{
+  const t=document.getElementById('darkToggle');
+  const apply=d=>{document.documentElement.setAttribute('data-theme',d?'dark':'light');t.textContent=d?'☀️':'🌙';try{localStorage.setItem('theme',d?'dark':'light');}catch(e){}};
+  try{apply(localStorage.getItem('theme')==='dark');}catch(e){apply(false);}
+  t.addEventListener('click',()=>apply(document.documentElement.getAttribute('data-theme')!=='dark'));
+})();
+
+/* ══ MENÚ MOBILE ══ */
+const ham=document.getElementById('navHam'),mob=document.getElementById('navMobile');
+function cerrarMenu(){ham.classList.remove('abierto');mob.classList.remove('abierto');mob.setAttribute('aria-hidden','true');ham.setAttribute('aria-expanded','false');document.body.style.overflow='';}
+ham.addEventListener('click',()=>{const a=mob.classList.toggle('abierto');ham.classList.toggle('abierto');mob.setAttribute('aria-hidden',!a);ham.setAttribute('aria-expanded',a);document.body.style.overflow=a?'hidden':'';});
+
+/* ══ CONTADORES ══ */
+const cObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(!e.isIntersecting)return;const el=e.target,target=parseInt(el.dataset.target),suf=el.dataset.suffix||'';if(isNaN(target))return;const dur=1800,step=16,inc=target/(dur/step);let cur=0;const t=setInterval(()=>{cur=Math.min(cur+inc,target);el.textContent='+'+Math.floor(cur).toLocaleString('es-AR')+suf;if(cur>=target){el.textContent='+'+target.toLocaleString('es-AR')+suf;clearInterval(t);}},step);cObs.unobserve(el);});},{threshold:.5});
+document.querySelectorAll('.stat-num[data-target]').forEach(el=>cObs.observe(el));
+
+/* ══ FADE ══ */
+const fadeObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fade-up').forEach((el,i)=>{el.style.transitionDelay=(i%4)*.08+'s';fadeObs.observe(el);});
+
+/* ══ SCROLL SPY ══ */
+const spySec=document.querySelectorAll('section[id]'),spyL=document.querySelectorAll('.nav-links a:not(.nav-cta)');
+new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){spyL.forEach(a=>a.classList.remove('activo'));const a=document.querySelector(`.nav-links a[href="#${e.target.id}"]`);if(a)a.classList.add('activo');}});},{rootMargin:'-40% 0px -55% 0px'}).observe.call({observe:s=>spySec.forEach(s2=>new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){spyL.forEach(a=>a.classList.remove('activo'));const a=document.querySelector(`.nav-links a[href="#${e.target.id}"]`);if(a)a.classList.add('activo');}});},{rootMargin:'-40% 0px -55% 0px'}).observe(s2))});spySec.forEach(s=>new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){spyL.forEach(a=>a.classList.remove('activo'));const a=document.querySelector(`.nav-links a[href="#${e.target.id}"]`);if(a)a.classList.add('activo');}});},{rootMargin:'-40% 0px -55% 0px'}).observe(s));
+
+/* ══ NEWSLETTER ══ */
+function submitNewsletter(e){e.preventDefault();e.target.style.display='none';document.getElementById('newsletter-ok').classList.add('visible');}
+
+setTimeout(renderCards, 800);
+</script>
+</body>
+</html>
